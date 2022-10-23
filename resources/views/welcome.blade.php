@@ -334,6 +334,12 @@
                         <td>illustrative</td>
                         <td>rich</td>
                         <td>data</td>
+                    </tr><tr>
+                        <td>1,014</td>
+                        <td>dashboard</td>
+                        <td>illustrative</td>
+                        <td>rich</td>
+                        <td>data</td>
                     </tr>
                     <tr>
                         <td>1,015</td>
