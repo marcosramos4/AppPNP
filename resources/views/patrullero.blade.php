@@ -261,7 +261,6 @@
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Estado</th>
                         <th class="d-none d-sm-table-cell" style="width: 30%;">Descripción</th>
                         <th class="text-center" style="width: 5%;">Acciones</th>
-
                     </tr>
                     </thead>
                     <tbody>
