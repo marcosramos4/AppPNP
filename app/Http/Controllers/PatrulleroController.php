@@ -43,6 +43,7 @@ class PatrulleroController extends Controller
         $this->validate($request,['estado'=>'requiered']);
 
 
+
     }
 
     /**

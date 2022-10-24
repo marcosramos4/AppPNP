@@ -25,7 +25,7 @@
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
              tabindex="0">
             <h1 class="h4 text-secondary">Registro de Patrullero</h1>
-            <form class="row g-4">
+            <form class="row g-4" method="POST" ACTION="{{route('$patrullero.store')}}">
                 <div>
                     <div class="row">
                         <div class="col-md-4">
