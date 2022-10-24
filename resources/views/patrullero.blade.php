@@ -264,8 +264,9 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($estados as $estado)
                     <tr>
-                        <td>Emil</td>
+                        <td></td>
                         <td>Tobias</td>
                         <td>Linus</td>
                         <td class="text-center">
@@ -281,6 +282,7 @@
                             </a>
                         </td>
                     </tr>
+                    @endforeach
                     <tr>
                         <td>Emil</td>
                         <td>Tobias</td>
