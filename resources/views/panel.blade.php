@@ -129,6 +129,15 @@
     <symbol id="geo-fill" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
     </symbol>
+    <symbol id="editar" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+    </symbol>
+    <symbol id="eliminar" viewBox="0 0 16 16">
+        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+    </symbol>
+
 </svg>
 
 
@@ -143,6 +152,21 @@
         </header>
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <strong>Integrador2</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+
+                        <li><a class="dropdown-item" href="#">Configuración</a></li>
+                        <li><a class="dropdown-item" href="#">My Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+
+
                 <?php
                 function activeMenu($url){
 
@@ -150,6 +174,8 @@
 
                 }
                 ?>
+
+
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
@@ -165,43 +191,37 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="text-white nav-link {{activeMenu('Orders')}} {{activeMenu('Orders/*')}} ">
+                        <a href="/patrullero" class="text-white nav-link {{activeMenu('patrullero')}} {{activeMenu('patrullero/*')}} ">
                             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                            Orders
+                            Patrullero
                         </a>
                     </li>  <li>
                         <a href="#" class="text-white nav-link {{activeMenu('Orders')}} {{activeMenu('Orders/*')}} ">
                             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                            Orders
+                            Sector
                         </a>
                     </li>
                     <li>
                         <a href="#" class="text-white nav-link {{activeMenu('Products')}} {{activeMenu('Products/*')}} ">
                             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                            Products
+                            Personal
                         </a>
                     </li>
                     <li>
                         <a href="#" class="text-white nav-link {{activeMenu('Customers')}} {{activeMenu('Customers/*')}} ">
                             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                            Customers
+                            Insidente
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white nav-link {{activeMenu('Customers')}} {{activeMenu('Customers/*')}} ">
+                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                            Registro
                         </a>
                     </li>
                 </ul>
                 <hr>
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong>Integrador2</strong>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
 
-                        <li><a class="dropdown-item" href="#">Configuración</a></li>
-                        <li><a class="dropdown-item" href="#">My Perfil</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
-                    </ul>
-                </div>
             </div>
 
         </nav>
