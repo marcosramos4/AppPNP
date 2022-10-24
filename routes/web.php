@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',['as'=>'home','uses'=>'PagesController@home']);
 Route::get('/dashboard/{datos?}',['as'=>'dashboard','uses'=>'PagesController@dashboard'])->where('datos',"[A-Za-z]+");
-
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/patrullero', function () {
     return view('patrullero');
 });
