@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/patrullero', function () {
+    return view('patrullero');
+});
+Route::resource('patrulleros', 'PatrullerosController');
