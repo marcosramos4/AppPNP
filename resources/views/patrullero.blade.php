@@ -33,21 +33,19 @@
                             <input type="email" class="form-control" id="inputplaca">
                         </div>
                         <div class="col-md-4">
-                            <label for="inputEmail4" class="form-label">Categoría</label>
+                            <label for="inputEmail4" class="form-label">Vehículo</label>
                             <select class="form-select" id="specificSizeSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                @foreach($categorias as $categoria)
+                                <option value="{{$categoria->id}}">{{$categoria->vehiculo}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label for="inputEmail4" class="form-label">Estado</label>
                             <select class="form-select" id="specificSizeSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                @foreach($estados as $estado)
+                                    <option value="{{$estado->id}}">{{$estado->estado}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -76,22 +74,25 @@
                     <tr class="text-secondary">
                         <th style="width: 5%;">ID</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Placa</th>
-                        <th class="d-none d-sm-table-cell" style="width: 30%;">Descripción</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Vehículo</th>
+                        <th class="d-none d-sm-table-cell" style="width: 20%;">Descripción</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Registrado</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Editado</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Estado</th>
-                        <th class="text-center" style="width: 5%;">Acciones</th>
+                        <th class="text-center" style="width: 10%;">Acciones</th>
 
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($patrulleros as $patrullero)
                     <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
+                        <td>{{$patrullero->id}}</td>
+                        <td>{{$patrullero->placa}}</td>
+                        <td>{{$patrullero->PatrulleroCategoria->vehiculo}}</td>
+                        <td>{{$patrullero->descripcion}}</td>
+                        <td>{{$patrullero->created_at}}</td>
+                        <td>{{$patrullero->updated_at}}</td>
+                        <td>{{$patrullero->PatrulleroEstado->estado}}</td>
                         <td class="text-center">
                             <a href="" class="button text-secondary">
                                 <svg class="bi pe-none me-2" width="25" height="30">
@@ -105,53 +106,15 @@
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td class="text-center">
-                            <a href="" class="button text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#editar"/>
-                                </svg>
-                            </a>
-                            <a href="" class="button  text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#eliminar"/>
-                                </svg>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td>Linus</td>
-                        <td class="text-center">
-                            <a href="" class="button text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#editar"/>
-                                </svg>
-                            </a>
-                            <a href="" class="button  text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#eliminar"/>
-                                </svg>
-                            </a>
-                        </td>
-                    </tr>
+                    @endforeach
+
                     </tbody>
                 </table>
             </div>
 
         </div>
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-            <h1 class="h4 text-secondary">Registro de Categoria</h1>
+            <h1 class="h4 text-secondary">Registro de Vehículo</h1>
             <form class="row g-4">
                 <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">Vehículo</label>
@@ -179,10 +142,12 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($categorias as $categoria)
+                        <option value="{{$categoria->id}}">{{$categoria->vehiculo}}</option>
                     <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
+                        <td>{{$categoria->id}}</td>
+                        <td>{{$categoria->vehiculo}}</td>
+                        <td>{{$categoria->descripcion}}</td>
                         <td class="text-center">
                             <a href="" class="button text-secondary">
                                 <svg class="bi pe-none me-2" width="25" height="30">
@@ -196,56 +161,23 @@
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td class="text-center">
-                            <a href="" class="button text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#editar"/>
-                                </svg>
-                            </a>
-                            <a href="" class="button  text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#eliminar"/>
-                                </svg>
-                            </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td class="text-center">
-                            <a href="" class="button text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#editar"/>
-                                </svg>
-                            </a>
-                            <a href="" class="button  text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#eliminar"/>
-                                </svg>
-                            </a>
-                        </td>
-
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
             <h1 class="h4 text-secondary">Registro de Estado</h1>
-            <form class="row g-4">
+            <form class="row g-4" @method('POST')>
                 <div class="col-md-12">
-                    <label for="inputEmail4" class="form-label">Estado</label>
-                    <input type="text" class="form-control" id="inputvehiculo" name="estado">
+                    <label for="inputEmail4" class="form-label">Estado(*)</label>
+                    <input type="text" class="form-control"  name="estado">
+                    {!! $errors->first('estado','<span class="error">:message</span>') !!}
+
                 </div>
                 <div>
                     <label for="inputdecripcion" class="form-label">Descripción</label>
-                    <textarea class="form-control w-100" rows="1" name="descripcion"></textarea>
+                    <textarea class="form-control w-100" rows="1" name="descripcion" value="{{ old('estado')}}"></textarea>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button type="submit" class="btn btn-primary mb-3 ">Guardar</button>
@@ -265,59 +197,24 @@
                     </thead>
                     <tbody>
                     @foreach($estados as $estado)
-                    <tr>
-                        <td></td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td class="text-center">
-                            <a href="" class="button text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#editar"/>
-                                </svg>
-                            </a>
-                            <a href="" class="button  text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#eliminar"/>
-                                </svg>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{$estado->id}}</td>
+                            <td>{{$estado->estado}}</td>
+                            <td>{{$estado->descripcion}}</td>
+                            <td class="text-center">
+                                <a href="" class="button text-secondary">
+                                    <svg class="bi pe-none me-2" width="25" height="30">
+                                        <use xlink:href="#editar"/>
+                                    </svg>
+                                </a>
+                                <a href="" class="button  text-secondary">
+                                    <svg class="bi pe-none me-2" width="25" height="30">
+                                        <use xlink:href="#eliminar"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
-                    <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td class="text-center">
-                            <a href="" class="button text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#editar"/>
-                                </svg>
-                            </a>
-                            <a href="" class="button  text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#eliminar"/>
-                                </svg>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Emil</td>
-                        <td>Tobias</td>
-                        <td>Linus</td>
-                        <td class="text-center">
-                            <a href="" class="button text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#editar"/>
-                                </svg>
-                            </a>
-                            <a href="" class="button  text-secondary">
-                                <svg class="bi pe-none me-2" width="25" height="30">
-                                    <use xlink:href="#eliminar"/>
-                                </svg>
-                            </a>
-                        </td>
-                    </tr>
-
                     </tbody>
                 </table>
             </div>

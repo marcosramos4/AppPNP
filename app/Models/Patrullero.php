@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Patrullero extends Model
 {
     use HasFactory;
+    public function PatrulleroCategoria(){
+        return $this->belongsTo(PatrulleroCategoria::class);
+    }
+    public function PatrulleroEstado(){
+        return $this->belongsTo(PatrulleroEstado::class);
+    }
 }

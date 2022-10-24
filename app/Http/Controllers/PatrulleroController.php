@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patrullero;
 use App\Models\PatrulleroCategoria;
 use App\Models\PatrulleroEstado;
 use Illuminate\Http\Request;
@@ -15,9 +16,10 @@ class PatrulleroController extends Controller
      */
     public function index()
     {
+        $patrulleros=Patrullero::all();
         $categorias=PatrulleroCategoria::all();
-        $estado=PatrulleroEstado::all();
-        return view('patrullero',compact($categorias,$estado));
+        $estados=PatrulleroEstado::all();
+        return view('patrullero',compact('patrulleros','categorias','estados'));
     }
 
     /**
@@ -38,7 +40,9 @@ class PatrulleroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,['estado'=>'requiered']);
+
+
     }
 
     /**
