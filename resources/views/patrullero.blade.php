@@ -25,16 +25,17 @@
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
              tabindex="0">
             <h1 class="h4 text-secondary">Registro de Patrullero</h1>
-            <form class="row g-4" method="POST" ACTION="{{route('$patrullero.store')}}">
+            <form class="row g-4" method="POST" action="{{route('patrullero.store')}}">
+
                 <div>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="inputEmail4" class="form-label">Placa</label>
-                            <input type="email" class="form-control" id="inputplaca">
+                            <input type="text" class="form-control" id="inputplaca" name="placa">
                         </div>
                         <div class="col-md-4">
                             <label for="inputEmail4" class="form-label">Vehículo</label>
-                            <select class="form-select" id="specificSizeSelect">
+                            <select class="form-select" id="specificSizeSelect" name="patrullero_categoria_id">
                                 @foreach($categorias as $categoria)
                                 <option value="{{$categoria->id}}">{{$categoria->vehiculo}}</option>
                                 @endforeach
@@ -42,7 +43,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="inputEmail4" class="form-label">Estado</label>
-                            <select class="form-select" id="specificSizeSelect">
+                            <select class="form-select" id="specificSizeSelect" name="patrullero_estado_id">
                                 @foreach($estados as $estado)
                                     <option value="{{$estado->id}}">{{$estado->estado}}</option>
                                 @endforeach
@@ -53,7 +54,7 @@
 
                 <div>
                     <label for="inputdecripcion" class="form-label">Descripción</label>
-                    <textarea class="form-control w-100" rows="1"></textarea>
+                    <textarea class="form-control w-100" rows="1" name="descripcion"></textarea>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button type="submit" class="btn btn-primary mb-3 ">Guardar</button>

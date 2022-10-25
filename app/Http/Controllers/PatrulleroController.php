@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patrullero;
 use App\Models\PatrulleroCategoria;
 use App\Models\PatrulleroEstado;
+use App\Models\Patrulleros;
 use Illuminate\Http\Request;
 
 class PatrulleroController extends Controller
@@ -40,8 +41,15 @@ class PatrulleroController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,['estado'=>'requiered']);
+        $validatedData = $request->validate([
+            'placa' => 'required|max:20',
+            'descripcion' => 'optional',
+            'patrullero_estado_id' => 'required',
+            'patrullero_categoria_id' => 'required',
+        ]);
+        patrulleros::create($validatedData);
 
+        //return redirect('/patrullero')->with('success', 'Patrullero is successfully saved');
 
 
     }
