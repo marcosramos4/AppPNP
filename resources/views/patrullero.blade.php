@@ -26,7 +26,7 @@
              tabindex="0">
             <h1 class="h4 text-secondary">Registro de Patrullero</h1>
             <form class="row g-4" method="POST" action="{{route('patrullero.store')}}">
-
+                @csrf
                 <div>
                     <div class="row">
                         <div class="col-md-4">

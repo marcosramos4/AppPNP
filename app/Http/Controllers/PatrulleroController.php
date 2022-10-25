@@ -43,11 +43,11 @@ class PatrulleroController extends Controller
     {
         $validatedData = $request->validate([
             'placa' => 'required|max:20',
-            'descripcion' => 'optional',
+            'descripcion' => '',
             'patrullero_estado_id' => 'required',
             'patrullero_categoria_id' => 'required',
         ]);
-        patrulleros::create($validatedData);
+        Patrullero::create($validatedData);
 
         //return redirect('/patrullero')->with('success', 'Patrullero is successfully saved');
 
