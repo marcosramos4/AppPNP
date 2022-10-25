@@ -3,7 +3,7 @@
 
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h3 text-secondary">Gestion de Patrulleros</h1>
+        <h1 class="h3 text-secondary">Gestion Patrulleros</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
 
         </div>
@@ -14,7 +14,7 @@
                     type="button" role="tab" aria-controls="nav-home" aria-selected="true">Patrulleros
             </button>
             <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
-                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Categorias
+                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Vehículos
             </button>
             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
                     type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Estados
@@ -144,7 +144,6 @@
                     </thead>
                     <tbody>
                     @foreach($categorias as $categoria)
-                        <option value="{{$categoria->id}}">{{$categoria->vehiculo}}</option>
                     <tr>
                         <td>{{$categoria->id}}</td>
                         <td>{{$categoria->vehiculo}}</td>
@@ -174,7 +173,6 @@
                     <label for="inputEmail4" class="form-label">Estado(*)</label>
                     <input type="text" class="form-control"  name="estado">
                     {!! $errors->first('estado','<span class="error">:message</span>') !!}
-
                 </div>
                 <div>
                     <label for="inputdecripcion" class="form-label">Descripción</label>
