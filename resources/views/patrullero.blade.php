@@ -228,7 +228,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="POST" >
+                        <form action="{{ route('patrullero.update', $patrullero_edit->id ) }}" method="POST" >
                             @csrf
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Placa(*)</label>
@@ -242,8 +242,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send message</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>
