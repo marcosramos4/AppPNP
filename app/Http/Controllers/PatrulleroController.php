@@ -8,6 +8,7 @@ use App\Models\PatrulleroEstado;
 use App\Models\Patrulleros;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use mysql_xdevapi\Collection;
 use mysql_xdevapi\Exception;
 
@@ -20,7 +21,7 @@ class PatrulleroController extends Controller
      */
     public function index()
     {
-        $patrulleros = Patrullero::all();
+        $patrulleros = Patrullero::orderBy("id", "desc")->get();
         $categorias = PatrulleroCategoria::all();
         $estados = PatrulleroEstado::all();
         return view('patrullero', compact('patrulleros', 'categorias', 'estados'));
@@ -52,9 +53,9 @@ class PatrulleroController extends Controller
         ]);
         try {
             Patrullero::create($validatedData);
-            return redirect('/patrullero')->with([ 'mensaje' => 'Patrullero fué registrado','tipo'=>'alert-success','titulo'=>'Realizado']);
+            return redirect('/patrullero')->with(['mensaje' => 'Patrullero fué registrado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
-            return redirect('/patrullero')->with([ 'mensaje' => 'Patrullero no fué registrado','tipo'=>' alert-danger','titulo'=>'Error']);
+            return redirect('/patrullero')->with(['mensaje' => 'Patrullero no fué registrado', 'tipo' => ' alert-danger', 'titulo' => 'Error']);
         }
 
     }
@@ -78,11 +79,11 @@ class PatrulleroController extends Controller
      */
     public function edit($id)
     {
-        $patrulleros = Patrullero::all();
+        $patrulleros = Patrullero::orderBy("id", "desc")->get();
         $categorias = PatrulleroCategoria::all();
         $estados = PatrulleroEstado::all();
-        $editar = Patrullero::findOrFail($id);
-        return view('patrullero', compact('patrulleros', 'categorias', 'estados', 'editar'));
+        $patrullero_edit = Patrullero::findOrFail($id);
+        return view('patrullero', compact('patrulleros', 'categorias', 'estados', 'patrullero_edit'));
     }
 
     /**
@@ -94,7 +95,18 @@ class PatrulleroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'placa' => 'required|max:20',
+            'descripcion' => '',
+            'patrullero_estado_id' => 'required',
+            'patrullero_categoria_id' => 'required',
+        ]);
+        try {
+            Patrulleros::whereId($id)->update($validatedData);
+            return redirect('/patrullero')->with(['mensaje' => 'Patrullero fué Actualizado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
+        } catch (QueryException $e) {
+            return redirect('/patrullero')->with(['mensaje' => 'Patrullero no fué Actualizado', 'tipo' => 'alert-danger', 'titulo' => 'Realizado']);
+        }
     }
 
     /**

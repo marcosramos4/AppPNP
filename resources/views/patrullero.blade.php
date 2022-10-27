@@ -219,26 +219,25 @@
         </div>
     </div>
 
-    @isset($editar)
+    @isset($patrullero_edit)
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar Patrullero</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="" method="POST" >
+                            @csrf
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                <input type="text" class="form-control" id="recipient-name" value="{{$editar->placa}}">
-                                <div class="invalid-tooltip">
-                                    Please provide a valid city.
-                                </div>
+                                <label for="recipient-name" class="col-form-label">Placa(*)</label>
+                                <input type="text" class="form-control" id="recipient-name" name="placa" value="{{$patrullero_edit->placa}}">
+                                {!!$errors->first('placa','<div class="invalid-feedback d-block">:message</div>')!!}
                             </div>
                             <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Message:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
+                                <label for="message-text" class="col-form-label">Descripcion</label>
+                                <textarea class="form-control" id="message-text">{{$patrullero_edit->descripcion}}</textarea>
                             </div>
                         </form>
                     </div>
