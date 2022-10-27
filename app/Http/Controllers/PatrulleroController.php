@@ -6,7 +6,10 @@ use App\Models\Patrullero;
 use App\Models\PatrulleroCategoria;
 use App\Models\PatrulleroEstado;
 use App\Models\Patrulleros;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Collection;
+use mysql_xdevapi\Exception;
 
 class PatrulleroController extends Controller
 {
@@ -47,10 +50,12 @@ class PatrulleroController extends Controller
             'patrullero_estado_id' => 'required',
             'patrullero_categoria_id' => 'required',
         ]);
-        Patrullero::create($validatedData);
-
-        //return redirect('/patrullero')->with('success', 'Patrullero is successfully saved');
-
+        try {
+            Patrullero::create($validatedData);
+            return redirect('/patrullero')->with([ 'mensaje' => 'Patrullero fué registrado','tipo'=>'alert-success','titulo'=>'Realizado']);
+        } catch (QueryException $e) {
+            return redirect('/patrullero')->with([ 'mensaje' => 'Patrullero no fué registrado','tipo'=>' alert-danger','titulo'=>'Error']);
+        }
 
     }
 
@@ -76,8 +81,8 @@ class PatrulleroController extends Controller
         $patrulleros = Patrullero::all();
         $categorias = PatrulleroCategoria::all();
         $estados = PatrulleroEstado::all();
-        $patrullero = null;
-        return view('patrullero', compact('patrulleros', 'categorias', 'estados', 'patrullero'));
+        $editar = Patrullero::findOrFail($id);
+        return view('patrullero', compact('patrulleros', 'categorias', 'estados', 'editar'));
     }
 
     /**

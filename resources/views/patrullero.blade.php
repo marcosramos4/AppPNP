@@ -30,8 +30,9 @@
                 <div>
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="inputEmail4" class="form-label">Placa</label>
-                            <input type="text" class="form-control" id="inputplaca" name="placa">
+                            <label for="inputEmail4" class="form-label ">Placa(*)</label>
+                            <input type="text" class="form-control" id="inputplaca" name="placa" {{old('placa')}}>
+                            {!!$errors->first('placa','<div class="invalid-feedback d-block">:message</div>')!!}
                         </div>
                         <div class="col-md-4">
                             <label for="inputEmail4" class="form-label">Vehículo</label>
@@ -54,7 +55,7 @@
 
                 <div>
                     <label for="inputdecripcion" class="form-label">Descripción</label>
-                    <textarea class="form-control w-100" rows="1" name="descripcion"></textarea>
+                    <textarea class="form-control w-100" rows="1" name="descripcion" >{{old('descripcion')}}</textarea>
                 </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button type="submit" class="btn btn-primary mb-3 ">Guardar</button>
@@ -77,7 +78,6 @@
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Placa</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Vehículo</th>
                         <th class="d-none d-sm-table-cell" style="width: 20%;">Descripción</th>
-                        <th class="d-none d-sm-table-cell" style="width: 10%;">Registrado</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Editado</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Estado</th>
                         <th class="text-center" style="width: 10%;">Acciones</th>
@@ -91,11 +91,10 @@
                         <td>{{$patrullero->placa}}</td>
                         <td>{{$patrullero->PatrulleroCategoria->vehiculo}}</td>
                         <td>{{$patrullero->descripcion}}</td>
-                        <td>{{$patrullero->created_at}}</td>
                         <td>{{$patrullero->updated_at}}</td>
                         <td>{{$patrullero->PatrulleroEstado->estado}}</td>
                         <td class="text-center">
-                            <a href="" class="button text-secondary">
+                            <a href="/patrullero/{{$patrullero->id}}/edit" class="button text-secondary">
                                 <svg class="bi pe-none me-2" width="25" height="30">
                                     <use xlink:href="#editar"/>
                                 </svg>
@@ -168,7 +167,7 @@
         </div>
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
             <h1 class="h4 text-secondary">Registro de Estado</h1>
-            <form class="row g-4" @method('POST')>
+            <form class="row g-4" method="POST">
                 <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">Estado(*)</label>
                     <input type="text" class="form-control"  name="estado">
@@ -219,10 +218,9 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
 
-    @if(false)
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @isset($editar)
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -233,7 +231,10 @@
                         <form>
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <input type="text" class="form-control" id="recipient-name" value="{{$editar->placa}}">
+                                <div class="invalid-tooltip">
+                                    Please provide a valid city.
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="message-text" class="col-form-label">Message:</label>
@@ -248,6 +249,18 @@
                 </div>
             </div>
         </div>
-    @endif
+
+        <script>
+
+            window.addEventListener('load', function() {
+
+                const myModal = new bootstrap.Modal('#myModal', {
+                    keyboard: true
+                });
+                myModal.show();
+            });
+
+        </script>
+    @endisset
 
 @stop
