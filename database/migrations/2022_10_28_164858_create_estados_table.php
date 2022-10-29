@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePatrulleroEstadosTable extends Migration
+class CreateEstadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePatrulleroEstadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('patrullero_estados', function (Blueprint $table) {
+        Schema::create('estados', function (Blueprint $table) {
             $table->id();
             $table->string('estado')->unique();
-            $table->text('descripcion')->nullable();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePatrulleroEstadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('patrullero_estados');
+        Schema::dropIfExists('estados');
     }
 }

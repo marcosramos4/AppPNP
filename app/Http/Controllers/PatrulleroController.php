@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patrullero;
-use App\Models\PatrulleroCategoria;
-use App\Models\PatrulleroEstado;
+use App\Models\Vehiculo;
+use App\Models\Estado;
 use App\Models\Patrulleros;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use mysql_xdevapi\Collection;
-use mysql_xdevapi\Exception;
-
 class PatrulleroController extends Controller
 {
     /**
@@ -22,9 +18,9 @@ class PatrulleroController extends Controller
     public function index()
     {
         $patrulleros = Patrullero::orderBy("id", "desc")->get();
-        $categorias = PatrulleroCategoria::all();
-        $estados = PatrulleroEstado::all();
-        return view('patrullero', compact('patrulleros', 'categorias', 'estados'));
+        $vehiculos = Vehiculo::all();
+        $estados = Estado::all();
+        return view('patrullero', compact('patrulleros', 'vehiculos', 'estados'));
     }
 
     /**
@@ -48,14 +44,14 @@ class PatrulleroController extends Controller
         $validatedData = $request->validate([
             'placa' => 'required|max:20',
             'descripcion' => '',
-            'patrullero_estado_id' => 'required',
-            'patrullero_categoria_id' => 'required',
+            'vehiculo_id' => 'required',
+            'estado_id' => 'required',
         ]);
         try {
             Patrullero::create($validatedData);
-            return redirect('/patrullero')->with(['mensaje' => 'Patrullero fué registrado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
+            return back()->with(['mensaje' => 'Patrullero fué registrado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
-            return redirect('/patrullero')->with(['mensaje' => 'Patrullero no fué registrado', 'tipo' => ' alert-danger', 'titulo' => 'Error']);
+            return back()->with(['mensaje' => 'Patrullero no fué registrado ', 'tipo' => ' alert-danger', 'titulo' => 'Error']);
         }
 
     }
@@ -68,7 +64,11 @@ class PatrulleroController extends Controller
      */
     public function show($id)
     {
-        //
+        $patrulleros = Patrullero::orderBy("id", "desc")->get();
+        $vehiculos = Vehiculo::all();
+        $estados = Estado::all();
+        $patrullero_show = Patrullero::findOrFail($id);
+        return view('patrullero', compact('patrulleros', 'patrullero_show','vehiculos', 'estados'));
     }
 
     /**
@@ -80,10 +80,10 @@ class PatrulleroController extends Controller
     public function edit($id)
     {
         $patrulleros = Patrullero::orderBy("id", "desc")->get();
-        $categorias = PatrulleroCategoria::all();
-        $estados = PatrulleroEstado::all();
+        $vehiculos = Vehiculo::all();
+        $estados = Estado::all();
         $patrullero_edit = Patrullero::findOrFail($id);
-        return view('patrullero', compact('patrulleros', 'categorias', 'estados', 'patrullero_edit'));
+        return view('patrullero', compact('patrulleros', 'patrullero_edit','vehiculos', 'estados'));
     }
 
     /**
@@ -98,14 +98,14 @@ class PatrulleroController extends Controller
         $validatedData = $request->validate([
             'placa' => 'required|max:20',
             'descripcion' => '',
-            'patrullero_estado_id' => 'required',
-            'patrullero_categoria_id' => 'required',
+            'vehiculo_id' => 'required',
+            'estado_id' => 'required',
         ]);
         try {
-            Patrulleros::whereId($id)->update($validatedData);
-            return redirect('/patrullero')->with(['mensaje' => 'Patrullero fué Actualizado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
+            Patrullero::whereId($id)->update($validatedData);
+            return redirect('patrullero')->with(['mensaje' => 'Patrullero fué Actualizado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
-            return redirect('/patrullero')->with(['mensaje' => 'Patrullero no fué Actualizado', 'tipo' => 'alert-danger', 'titulo' => 'Realizado']);
+            return redirect('patrullero')->with(['mensaje' => 'Patrullero no fué Actualizado', 'tipo' => 'alert-danger', 'titulo' => 'Error']);
         }
     }
 
@@ -117,6 +117,11 @@ class PatrulleroController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Patrullero::destroy($id);
+            return redirect('/patrullero')->with(['mensaje' => 'Patrullero fué Eliminado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
+        } catch (QueryException $e) {
+            return redirect('/patrullero')->with(['mensaje' => 'Patrullero no fué Eliminado', 'tipo' => 'alert-warning', 'titulo' => 'Error']);
+        }
     }
 }
