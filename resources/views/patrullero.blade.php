@@ -76,13 +76,37 @@
                         <button type="submit" class="btn btn-primary mb-3 ">Guardar</button>
                     </div>
                 </form>
-                <form class="col-md-4">
+                <form class="col-md-4" method="POST" id="patrulleroBuscar" action="patrullero/buscar">
+                    @csrf
                     <div class="input-group">
-                        <input type="search" class="form-control rounded" placeholder="Buscar" aria-label="Search"
-                               aria-describedby="search-addon"/>
-                        <button type="button" class="btn btn-outline-primary">Buscar</button>
+                        <input type="search" class="form-control rounded" placeholder="Buscar"
+                               name="placa" onkeypress="buscar(this)"/>
+                    </div>
+                    <div class="list-group position-absolute " id="listaPlaca">
                     </div>
                 </form>
+                <script>
+                    function buscar(e){
+                        console.log(e.value);
+                        const xmr = new XMLHttpRequest();
+                        const formData = new FormData(document.getElementById('patrulleroBuscar'));
+                        const listaPlaca=document.getElementById('listaPlaca')
+                        xmr.open("POST", 'patrullero/buscar', true);
+                        xmr.send(formData);
+                        xmr.onreadystatechange = function () {
+                            if (this.readyState === 4 && this.status === 200) {
+                                const patrulleros =JSON.parse(this.responseText);
+                                let alist='';
+                                patrulleros.forEach(patru=> alist+=
+                                    '<a href="/patrullero/'+patru.id+'" class="list-group-item list-group-item-action">'+patru.placa+'</a>' );
+                                listaPlaca.innerHTML=alist;
+
+                            }
+                        };
+
+                    }
+
+                </script>
                 <br>
                 <div class="box-typical box-typical-padding">
                     <table id="ticket_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
@@ -212,6 +236,23 @@
                             </div>
                             <div class="modal-footer">
                                 <p>Creado: {{$patrullero_show->created_at}} / Actualizado: {{$patrullero_show->updated_at}}</p>
+
+                            </div>
+                            <div>
+                                <div class="modal-footer fs-5 ">
+                                    <a href="{{route('patrullero.edit',$patrullero->id)}}"
+                                       class=" link-primary">Editar
+                                    </a>
+                                    <form action="{{route('patrullero.destroy',$patrullero->id)}}" method="POST"
+                                          class="d-inline ">
+                                        @csrf
+                                        {!! method_field('DELETE') !!}
+                                        <button class="confirmar  link-primary border-0 bg-transparent p-0"
+                                                type="submit">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
 
                             </div>
 

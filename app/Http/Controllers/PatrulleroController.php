@@ -8,6 +8,7 @@ use App\Models\Estado;
 use App\Models\Patrulleros;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+
 class PatrulleroController extends Controller
 {
     /**
@@ -68,7 +69,7 @@ class PatrulleroController extends Controller
         $vehiculos = Vehiculo::all();
         $estados = Estado::all();
         $patrullero_show = Patrullero::findOrFail($id);
-        return view('patrullero', compact('patrulleros', 'patrullero_show','vehiculos', 'estados'));
+        return view('patrullero', compact('patrulleros', 'patrullero_show', 'vehiculos', 'estados'));
     }
 
     /**
@@ -83,7 +84,7 @@ class PatrulleroController extends Controller
         $vehiculos = Vehiculo::all();
         $estados = Estado::all();
         $patrullero_edit = Patrullero::findOrFail($id);
-        return view('patrullero', compact('patrulleros', 'patrullero_edit','vehiculos', 'estados'));
+        return view('patrullero', compact('patrulleros', 'patrullero_edit', 'vehiculos', 'estados'));
     }
 
     /**
@@ -123,5 +124,12 @@ class PatrulleroController extends Controller
         } catch (QueryException $e) {
             return redirect('/patrullero')->with(['mensaje' => 'Patrullero no fué Eliminado', 'tipo' => 'alert-warning', 'titulo' => 'Error']);
         }
+    }
+
+    public function buscar(Request $request)
+    {
+        $placa = $request->input('placa');
+        $filterData = Patrullero::where('placa', 'LIKE', '%'.$placa.'%')->get();
+        return $filterData;
     }
 }
