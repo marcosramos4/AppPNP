@@ -1,4 +1,6 @@
 @extends('panel')
 @section('contenido')
-    aqui va el contenido de home
+
+<x-maps-leaflet :centerPoint="['lat' => -16.4009255, 'long' => -71.5388356]" :zoomLevel="80" :markers="[['lat' => 16.4009255, 'long' => -16.4009255]]"></x-maps-leaflet> 
+
 @stop
