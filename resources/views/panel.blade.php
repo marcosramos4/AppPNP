@@ -199,12 +199,10 @@
                     return request()->is($url) ? 'active' : '';
                 }
                 ?>
-
-
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="/" class="text-white nav-link {{activeMenu('/')}}" aria-current="page">
+                        <a href="/" class="text-white nav-link {{active('/')}}" aria-current="page">
                             <svg class="bi pe-none me-2" width="16" height="16">
                                 <use xlink:href="#home"/>
                             </svg>
@@ -247,8 +245,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"
-                           class="text-white nav-link {{activeMenu('Products')}} {{activeMenu('Products/*')}} ">
+                        <a href="{{route('personal.index')}}"
+                           class="text-white nav-link {{activeMenu('personal')}} {{activeMenu('personal/*')}} ">
                             <svg class="bi pe-none me-2" width="16" height="16">
                                 <use xlink:href="#people"/>
                             </svg>

@@ -8,17 +8,11 @@
 
         </div>
     </div>
-    <?php
-    function activeSubMenu($url)
-    {
-        return request()->is($url) ? 'active' : '';
-    }
-    ?>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a href="/patrullero" class="nav-link {{activeSubMenu('patrullero')}}">Patrulleros</a>
-            <a href="/patrullero/vehiculo" class="nav-link {{activeSubMenu('patrullero/vehiculo')}}">Vehículos</a>
-            <a href="/patrullero/estado" class="nav-link {{activeSubMenu('patrullero/estado')}}">Estados</a>
+            <a href="/patrullero" class="nav-link {{active('patrullero')}}">Patrulleros</a>
+            <a href="/patrullero/vehiculo" class="nav-link {{active('patrullero/vehiculo')}}">Vehículos</a>
+            <a href="/patrullero/estado" class="nav-link {{active('patrullero/estado')}}">Estados</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -225,11 +219,11 @@
                             </div>
                             <div class="modal-body fs-6">
                                 <p><b> PLACA:</b> {{$patrullero_show->placa}} </p>
-                                <p><b>Vehiculo: </b>{{$patrullero->Vehiculo->vehiculo}}<br>
-                                    {{$patrullero->Vehiculo->descripcion}}
+                                <p><b>Vehiculo: </b>{{$patrullero_show->Vehiculo->vehiculo}}<br>
+                                    {{$patrullero_show->Vehiculo->descripcion}}
                                 </p>
-                                <p><b>Estado: </b>{{$patrullero->Estado->estado}}<br>
-                                    {{$patrullero->Estado->descripcion}}
+                                <p><b>Estado: </b>{{$patrullero_show->Estado->estado}}<br>
+                                    {{$patrullero_show->Estado->descripcion}}
                                 </p>
                                 <p class=" fw-bold">Descripción:</p>
                                 <p>{{$patrullero_show->Descripcion}}</p>
@@ -240,10 +234,10 @@
                             </div>
                             <div>
                                 <div class="modal-footer fs-5 ">
-                                    <a href="{{route('patrullero.edit',$patrullero->id)}}"
+                                    <a href="{{route('patrullero.edit',$patrullero_show->id)}}"
                                        class=" link-primary">Editar
                                     </a>
-                                    <form action="{{route('patrullero.destroy',$patrullero->id)}}" method="POST"
+                                    <form action="{{route('patrullero.destroy',$patrullero_show->id)}}" method="POST"
                                           class="d-inline ">
                                         @csrf
                                         {!! method_field('DELETE') !!}
