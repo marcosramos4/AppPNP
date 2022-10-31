@@ -31,4 +31,5 @@ Route::POST('personal/buscar','PersonalController@buscar');
 Route::resource('personal','PersonalController');
 
 
+Route::resource('sector','SectorController');
 
