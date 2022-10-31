@@ -30,6 +30,17 @@ Route::resource('personal/rol','RolController');
 Route::POST('personal/buscar','PersonalController@buscar');
 Route::resource('personal','PersonalController');
 
+//gestion sector
 
-Route::resource('sector','SectorController');
+Route::resource('subsector/sector','SectorController');
+Route::POST('subsector/buscar','SubSectorController@buscar');
+Route::resource('subsector','SubSectorController');
+
+//gestion incidente
+
+Route::resource('incidente','IncidenteController');
+
+//gestion registro
+Route::resource('registro','RegistroController');
+
 

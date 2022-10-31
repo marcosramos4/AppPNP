@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Personal;
 use App\Models\Rol;
-use App\Models\Vehiculo;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -105,7 +104,6 @@ class PersonalController extends Controller
         ]);
         $usuario = substr($request->input('nombres'),0, 3) . substr($request->input('apellidos'),0,3).substr($request->input('DNI'),3,3);
         $updatepero=array_merge($validatedData, ['usuario' => $usuario, 'password' => $request->input('DNI')]);
-
         try {
             Personal::whereId($id)->update($updatepero);
             return redirect('personal')->with(['mensaje' => 'Personal fué Actualizado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);

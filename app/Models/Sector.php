@@ -8,7 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Sector extends Model
 {
     use HasFactory;
-    protected $fillable=['sector','subsector_id','estado_id','descripcion'];
-
+    protected $fillable=['nombre','descripcion','estado'];
 }
-
