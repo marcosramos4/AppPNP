@@ -42,5 +42,5 @@ Route::resource('incidente','IncidenteController');
 
 //gestion registro
 Route::resource('registro','RegistroController');
-
+Route::resource('iniciosesion','IniciosesionController');
 
