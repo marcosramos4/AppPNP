@@ -36,7 +36,8 @@
             <tr class="text-secondary">
                 <th style="width: 5%;">N°</th>
                 <th class="d-none d-sm-table-cell" style="width: 10%;">ID</th>
-                <th class="d-none d-sm-table-cell" style="width: 10%;">Cordenadas</th>
+                <th class="d-none d-sm-table-cell" style="width: 10%;">Latitud</th>
+                <th class="d-none d-sm-table-cell" style="width: 10%;">Longitud</th>
                 <th class="d-none d-sm-table-cell" style="width: 20%;">detalle</th>
                 <th class="d-none d-sm-table-cell" style="width: 10%;">Foto</th>
                 <th class="d-none d-sm-table-cell" style="width: 10%;">Sector</th>
@@ -49,7 +50,8 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td><a href="{{route('personal.show',$incidente->id)}}">{{$incidente->id}}</a></td>
-                    <td>{{$incidente->cordenadas}}</td>
+                    <td>{{$incidente->lat}}</td>
+                    <td>{{$incidente->lng}}</td>
                     <td>{{$incidente->detalle}}</td>
                     <td>{{$incidente->foto}}</td>
                     <td>{{$incidente->Sector->nombre}}</td>

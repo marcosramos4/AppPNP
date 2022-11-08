@@ -15,7 +15,8 @@ class CreateIncidentesTable extends Migration
     {
         Schema::create('incidentes', function (Blueprint $table) {
             $table->id();
-            $table->string('cordenadas');
+            $table->decimal('lat', $precision = 10, $scale = 8);
+            $table->decimal('lng', $precision = 10, $scale = 8);
             $table->text('detalle')->nullable();
             $table->text('fotos')->nullable();
             $table->integer('sector_id')->index();

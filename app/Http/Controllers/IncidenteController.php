@@ -20,6 +20,26 @@ class IncidenteController extends Controller
         return view('incidente', compact( 'incidentes'));
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function home(){
+
+        $locations = [];     
+
+        foreach (incidente::All() as $incidentes) {
+
+            $locations[] = [
+                     //'location' => view('map-tool-tip')->with(['address' => $address])->render(), 
+                     'latitude' => $incidentes->lat, 
+                     'longitude' => $incidentes->lng
+            ];
+        }
+
+        return view('home')->with('locations', $locations);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -39,7 +59,8 @@ class IncidenteController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'cordenadas' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
             'detalle' => '',
             'foto' => '',
             'sector_id' => 'required'

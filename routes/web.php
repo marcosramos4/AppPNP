@@ -16,7 +16,8 @@ function active($url){
     return request()->is($url) ? 'active' : '';
 }
 
-Route::get('/',['as'=>'home','uses'=>'PagesController@home']);
+Route::get('/',['as'=>'home','uses'=>'IncidenteController@home']);
+/*Route::get('/',['as'=>'home','uses'=>'PagesController@home']);*/
 Route::get('/dashboard/{datos?}',['as'=>'dashboard','uses'=>'PagesController@dashboard'])->where('datos',"[A-Za-z]+");
 
 //gestion patrullero
