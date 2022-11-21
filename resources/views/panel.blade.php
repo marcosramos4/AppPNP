@@ -7,9 +7,12 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.104.2">
     <title>Dashboard Template · Bootstrap v5.2</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+          integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+            integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+            crossorigin=""></script>
     <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <style>
@@ -194,6 +197,18 @@
                         <a href="/dashboard" class="text-white nav-link {{active('dashboard')}} {{active('dashboard/*')}} ">
                             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                             Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('alertas.index')}}" class="text-white nav-link {{active('alertas')}} {{active('alertas/*')}} ">
+                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                            Alertas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('vigilancia.index')}}" class="text-white nav-link {{active('vigilancia')}} {{active('vigilancia/*')}} ">
+                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                            Vigilancia
                         </a>
                     </li>
                     <li>

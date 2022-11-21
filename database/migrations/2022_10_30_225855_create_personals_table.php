@@ -18,9 +18,6 @@ class CreatePersonalsTable extends Migration
             $table->string('DNI')->unique();
             $table->string('nombres');
             $table->string('apellidos');
-            $table->string('correo')->unique();
-            $table->string('usuario')->unique();
-            $table->text('password');
             $table->integer('rol_id')->index();
             $table->integer('estado')->default(1);
             $table->timestamps();

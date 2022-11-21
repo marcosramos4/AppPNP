@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//incidente
+Route::resource('incidente','ApiIncidenteController');
+//registro
+Route::resource('registro','ApiRegistroController');

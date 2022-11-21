@@ -8,9 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Personal extends Model
 {
     use HasFactory;
-    protected $fillable=['DNI','nombres','apellidos','correo','usuario','password','rol_id','estado'];
 
-    function Rol(){
+    protected $fillable = ['DNI', 'nombres', 'apellidos', 'rol_id', 'estado'];
+
+    function Rol()
+    {
         return $this->belongsTo(Rol::class);
     }
+    public function User(){
+        return $this->hasOne(User::class);
+    }
+
 }

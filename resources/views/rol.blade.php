@@ -10,15 +10,25 @@
                 <input type="text" class="form-control" name="nombre" value="{{old('nombre')}}">
                 {!!$errors->first('nombre','<div class="invalid-feedback d-block">:message</div>')!!}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <label for="inputEmail4" class="form-label">Descripcion(*)</label>
                 <input type="text" class="form-control" name="descripcion" value="{{old('descripcion')}}">
                 {!!$errors->first('descripcion','<div class="invalid-feedback d-block">:message</div>')!!}
             </div>
-            <div class="col-md-4">
-                <label for="inputEmail4" class="form-label">Permisos(*)</label>
-                <input type="text" class="form-control" name="permisos" value="{{old('permisos')}}">
-                {!!$errors->first('permisos','<div class="invalid-feedback d-block">:message</div>')!!}
+            <h4 class="h4 text-secondary">Permisos</h4>
+            <div class="row text-secondary">
+               @foreach($modulos as $key=>$modulo)
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold text-capitalize">{{$key}}</label>
+                        <div class="form-check ">
+                            @foreach($modulo as $nombre=>$stado)
+                                <label class="text-capitalize">{{$nombre}}</label>
+                                <input name="permisos[{{$key}}][{{$nombre}}]" class="form-check-input" type="checkbox" {{$stado?'checked':''}}><br>
+                            @endforeach
+                         </div>
+                    </div>
+                @endforeach
+                   {!!$errors->first('permisos','<div class="invalid-feedback d-block">:message</div>')!!}
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="submit" class="btn btn-primary mb-3 ">Guardar</button>
@@ -32,7 +42,7 @@
                 <tr class="text-secondary">
                     <th style="width:5%;">ID</th>
                     <th class="d-none d-sm-table-cell" style="width: 10%;">Rol</th>
-                    <th class="d-none d-sm-table-cell" style="width: 10%;">Permisos</th>
+                    <th class="d-none d-sm-table-cell" style="width: 30%;">Permisos</th>
                     <th class="d-none d-sm-table-cell" style="width: 30%;">Descripción</th>
                     <th class="text-center" style="width: 5%;">Acciones</th>
                 </tr>
@@ -42,7 +52,14 @@
                     <tr>
                         <td>{{$rol->id}}</td>
                         <td>{{$rol->nombre}}</td>
-                        <td>{{$rol->permisos}}</td>
+                        <td> @foreach(json_decode($rol->permisos) as $key=>$permiso)
+                                 {{$key}}:
+                               @foreach( $permiso as $ji=>$tipo)
+                                   {{$tipo?$ji:''}},
+                                @endforeach
+                                 <br>
+                            @endforeach
+                        </td>
                         <td>{{$rol->descripcion}}</td>
                         <td class="text-center fs-5">
                             <a href="{{route('rol.edit',$rol->id)}}"
@@ -87,11 +104,21 @@
                                     {!!$errors->first('nombre','<div class="invalid-feedback d-block">:message</div>')!!}
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="recipient-name" class="form-label">Permisos(*)</label>
-                                    <input type="text" class="form-control" name="permisos"
-                                           value="{{$rol_edit->permisos}}">
-                                    {!!$errors->first('permisos','<div class="invalid-feedback d-block">:message</div>')!!}
-                                </div>
+                                    <h4 class="h4 text-secondary">Permisos</h4>
+                                    <div class="row text-secondary">
+                                        @foreach(json_decode($rol_edit->permisos) as $key=>$modulo)
+                                            <div class="col-md-3">
+                                                <label class="form-label fw-bold text-capitalize">{{$key}}</label>
+                                                <div class="form-check ">
+                                                    @foreach($modulo as $nombre=>$stado)
+                                                        <label class="text-capitalize">{{$nombre}}</label>
+                                                        <input name="permisos[{{$key}}][{{$nombre}}]" class="form-check-input" type="checkbox" {{$stado?'checked':''}}><br>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        {!!$errors->first('permisos','<div class="invalid-feedback d-block">:message</div>')!!}
+                                    </div></div>
                             </div>
                             <div class="mb-3">
                                 <label for="message-text" class="col-form-label">Descripción</label>

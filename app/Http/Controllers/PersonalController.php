@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Personal;
 use App\Models\Rol;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PersonalController extends Controller
 {
+    public function __construct()
+    {
+       // $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -43,15 +49,21 @@ class PersonalController extends Controller
             'DNI' => 'required|min:6',
             'nombres' => 'required|max:100',
             'apellidos' => 'required|max:100',
-            'correo' => 'required|email',
             'rol_id' => 'required',
         ]);
+        $validauser=$request->validate([
+            'email' => 'required|email',
+        ]);
         $usuario = substr($request->input('nombres'),0, 3) . substr($request->input('apellidos'),0,3).substr($request->input('DNI'),3,3);
-        $nuevo=array_merge($validatedData, ['usuario' => $usuario, 'password' => $request->input('DNI')]);
         try {
-            Personal::create($nuevo);
+            DB::beginTransaction();
+            $personal=Personal::create($validatedData);
+            $nuevo=array_merge($validauser, ['name' => $usuario, 'password' => $request->input('DNI'),'personal_id'=>$personal->id]);
+            User::create($nuevo);
+            DB::commit();
             return back()->with(['mensaje' => 'Personal fué registrado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
+            DB::rollBack();
             return back()->with(['mensaje' => 'Personal no fué registrado ', 'tipo' => ' alert-danger', 'titulo' => 'Error']);
         }
     }

@@ -46,6 +46,7 @@
             </tr>
             </thead>
             <tbody>
+            @if($incidentes)
             @foreach($incidentes as $incidente)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
@@ -56,10 +57,9 @@
                     <td>{{$incidente->foto}}</td>
                     <td>{{$incidente->Sector->nombre}}</td>
                     <td>{{$incidente->estado}}</td>
-
                 </tr>
             @endforeach
-
+            @endif
             </tbody>
         </table>
     </div>

@@ -8,6 +8,24 @@ use Illuminate\Http\Request;
 
 class RolController extends Controller
 {
+    const MODULOS = [
+        'estado' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'vehiculo' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'patrullero' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'personal' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'asignacion' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'sector' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'subsector' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'incidente' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+        'registro' => ['visualizar' => false, 'registrar' => false, 'editar' => false, 'eliminar' => false,],
+    ];
+
+    public function __construct()
+    {
+       // $this->middleware('permisos',['uno']);
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +34,8 @@ class RolController extends Controller
     public function index()
     {
         $roles = Rol::all();
-        return view('rol', compact( 'roles' ));
+        $modulos = self::MODULOS;
+        return view('rol', compact('roles', 'modulos'));
     }
 
     /**
@@ -32,7 +51,7 @@ class RolController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,8 +59,9 @@ class RolController extends Controller
         $validatedData = $request->validate([
             'nombre' => 'required|min:3',
             'descripcion' => '',
-            'permisos' => ''
+            'permisos' => 'required'
         ]);
+        $validatedData['permisos'] = self::permisos($validatedData['permisos']);
         try {
             Rol::create($validatedData);
             return back()->with(['mensaje' => 'Rol fué registrado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
@@ -50,10 +70,29 @@ class RolController extends Controller
         }
     }
 
+    private function permisos($permisosinput)
+    {
+        $modulos = self::MODULOS;
+        foreach ($permisosinput as $key => $value) {
+            foreach ($modulos as $per => $es) {
+                if ($per == $key) {
+                    foreach ($value as $io => $opl) {
+                        foreach ($es as $ju => $lki) {
+                            if ($io == $ju) {
+                                $modulos[$per][$ju] = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return json_encode($modulos);
+    }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -64,21 +103,22 @@ class RolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $roles = Rol::all();
+        $modulos = self::MODULOS;
         $rol_edit = Rol::findOrFail($id);
-        return view('rol', compact( 'roles','rol_edit' ));
+        return view('rol', compact('roles', 'rol_edit','modulos'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -86,8 +126,9 @@ class RolController extends Controller
         $validatedData = $request->validate([
             'nombre' => 'required|min:3',
             'descripcion' => '',
-            'permisos' => '',
+            'permisos' => 'required',
         ]);
+        $validatedData['permisos'] = self::permisos($validatedData['permisos']);
         try {
             Rol::whereId($id)->update($validatedData);
             return redirect('/personal/rol')->with(['mensaje' => 'Rol fué Actualizado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
@@ -99,7 +140,7 @@ class RolController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

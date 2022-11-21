@@ -60,19 +60,22 @@
             <div class="col-lg-4 col-8 mx-auto">
                 <div class="text-center image-size-small position-relative">
                     <img src="https://annedece.sirv.com/Images/user-vector.jpg" class="rounded-circle p-2 bg-white">
-                    <div class="icon-camera">
-                        <a href="" class="text-primary"><i class="lni lni-camera"></i></a>
-                    </div>
+
                 </div>
                 <div class="p-5 bg-white rounded shadow-lg">
                     <h3 class="mb-2 text-center pt-5">Bienvenido</h3>
-
-                    <form>
-                        <label class="font-500">Email</label>
-                        <input name="" class="form-control form-control-lg mb-3" type="email">
+                    @if(session()->has('mensaje'))
+                    <div class="alert alert-danger" role="alert">
+                        {{session()->get('mensaje')}}
+                    </div>
+                    @endif
+                    <form method="POST">
+                        @csrf
+                        <label class="font-500">Usuario</label>
+                        <input name="name" class="form-control p-3 mb-2" type="text">
                         <label class="font-500">Password</label>
-                        <input name="" class="form-control form-control-lg" type="password">
-                        <p class="m-0 py-4"><a href="" class="text-muted">Olvidastes Contraseña?</a></p>
+                        <input name="password" class="form-control p-3" type="password">
+                        <p class="m-0 py-4"><a href="" class="text-muted">Olvidaste tu Contraseña?</a></p>
                         <button class="btn btn-primary btn-lg w-100 shadow-lg">INICIAR</button>
                     </form>
 

@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Incidente extends Model
 {
     use HasFactory;
-    protected $fillable=['lat', 'lng','detalle','fotos','sector_id','estado'];
+    protected $fillable=['latitud', 'longitud','detalle','fotos','sector_id','tipo_id','estado'];
     function Sector(){
         return $this->belongsTo(Sector::class);
     }
+    function Tipo(){
+        return $this->belongsTo(Tipo::class);
+    }
+    protected $hidden = [
+        'sector_id',
+        'tipo_id',
+    ];
 }

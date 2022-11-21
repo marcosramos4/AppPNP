@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRegistrosTable extends Migration
+class CreateTiposTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateRegistrosTable extends Migration
      */
     public function up()
     {
-        Schema::create('registros', function (Blueprint $table) {
+        Schema::create('tipos', function (Blueprint $table) {
             $table->id();
-            $table->decimal('latitud',10,7);
-            $table->decimal('longitud',10,7);
-            $table->text('detalle')->nullable();
-            $table->integer('personal_id')->index();
-            $table->integer('estado')->default(1);
+            $table->string('nombre')->unique();
+            $table->text('descripcion')->nullable();
+            $table->string('color')->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateRegistrosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registros');
+        Schema::dropIfExists('tipos');
     }
 }

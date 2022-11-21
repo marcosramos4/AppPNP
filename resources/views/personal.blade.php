@@ -72,10 +72,10 @@
                                                 {!!$errors->first('apellidos','<div class="invalid-feedback d-block">:message</div>')!!}
                                             </div>
                                             <div class="col-md-12">
-                                                <label for="inputEmail4" class="form-label ">Correo(*)</label>
+                                                <label for="inputEmail4" class="form-label ">Email(*)</label>
                                                 <input type="email" class="form-control"
-                                                       name="correo" {{old('correo')}}>
-                                                {!!$errors->first('correo','<div class="invalid-feedback d-block">:message</div>')!!}
+                                                       name="email" {{old('email')}}>
+                                                {!!$errors->first('email','<div class="invalid-feedback d-block">:message</div>')!!}
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                             <th class="d-none d-sm-table-cell" style="width: 10%;">DNI</th>
                             <th class="d-none d-sm-table-cell" style="width: 10%;">Nombres</th>
                             <th class="d-none d-sm-table-cell" style="width: 20%;">Apellidos</th>
-                            <th class="d-none d-sm-table-cell" style="width: 10%;">Correo</th>
+                            <th class="d-none d-sm-table-cell" style="width: 10%;">Email</th>
                             <th class="d-none d-sm-table-cell" style="width: 10%;">Rol</th>
                             <th class="text-center" style="width: 10%;">Acciones</th>
 
@@ -156,7 +156,7 @@
                                 <td><a href="{{route('personal.show',$personal->id)}}">{{$personal->DNI}}</a></td>
                                 <td>{{$personal->nombres}}</td>
                                 <td>{{$personal->apellidos}}</td>
-                                <td>{{$personal->correo}}</td>
+                                <td>{{$personal->email}}</td>
                                 <td>{{$personal->Rol->descripcion}}</td>
                                 <td class="text-center fs-5">
                                     <a href="{{route('personal.edit',$personal->id)}}"
@@ -227,10 +227,10 @@
                                                 {!!$errors->first('apellidos','<div class="invalid-feedback d-block">:message</div>')!!}
                                             </div>
                                             <div class="col-md-12">
-                                                <label for="inputEmail4" class="form-label ">Correo(*)</label>
-                                                <input type="email" class="form-control" value="{{$personal_edit->correo}}"
-                                                       name="correo" {{old('correo')}}>
-                                                {!!$errors->first('correo','<div class="invalid-feedback d-block">:message</div>')!!}
+                                                <label for="inputEmail4" class="form-label ">Email(*)</label>
+                                                <input type="email" class="form-control" value="{{$personal_edit->email}}"
+                                                       name="email" {{old('email')}}>
+                                                {!!$errors->first('email','<div class="invalid-feedback d-block">:message</div>')!!}
                                             </div>
                                         </div>
                                     </div>
@@ -262,7 +262,7 @@
                                 <p><b> DNI:</b> {{$personal_show->DNI}} </p>
                                 <p><b>Nombres: </b>{{$personal_show->nombres}}</p>
                                 <p><b>Apellidos: </b>{{$personal_show->apellidos}}</p>
-                                <p><b>Correo: </b>{{$personal_show->correo}}</p>
+                                <p><b>Email: </b>{{$personal_show->Email}}</p>
                                 <p><b>Usuario: </b>{{$personal_show->usuario}}</p>
                                 <p><b>Rol: </b>{{$personal_show->Rol->nombre}}</p>
                             </div>
