@@ -19,7 +19,7 @@ class ApiRegistroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): JsonResponse
     {
         try {
             $registros = Registro::with('Personal','Sector')->get();
@@ -72,7 +72,7 @@ class ApiRegistroController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         try {
             $registro = Registro::with('Personal','Sector')->get()->where('sector_id', $id);

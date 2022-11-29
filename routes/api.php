@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('incidente','ApiIncidenteController');
 //registro
 Route::resource('registro','ApiRegistroController');
+//tipo
+Route::resource('tipo','ApiTipoController');
