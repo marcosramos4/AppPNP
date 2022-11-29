@@ -19,6 +19,7 @@ class CreateRegistrosTable extends Migration
             $table->decimal('longitud',10,7);
             $table->text('detalle')->nullable();
             $table->integer('personal_id')->index();
+            $table->integer('sector_id')->index();
             $table->integer('estado')->default(1);
             $table->timestamps();
         });

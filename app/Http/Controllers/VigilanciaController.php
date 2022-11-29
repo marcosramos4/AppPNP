@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sector;
 use Illuminate\Http\Request;
 
 class VigilanciaController extends Controller
@@ -13,7 +14,10 @@ class VigilanciaController extends Controller
      */
     public function index()
     {
-        return view('vigilancia');
+        $sectores=Sector::all();
+        $sector_show=null;
+        $ubicaciion='[-16.398882, -71.536961]';
+        return view('vigilancia',compact('sectores','sector_show','ubicaciion'));
     }
 
     /**
@@ -45,7 +49,23 @@ class VigilanciaController extends Controller
      */
     public function show($id)
     {
-        //
+        $sectores=Sector::all();
+        $sector_show=Sector::findOrFail($id);
+        $ubicaciion=$this->Ubicacion($sector_show->cordenadas);
+        return view('vigilancia',compact('sectores','sector_show','ubicaciion'));
+    }
+    private function Ubicacion($cordenadas){
+        $cordenadas=json_decode('{"cordenadas":['.$cordenadas.']}');
+        $latitud=0;
+        $longitud=0;
+
+        foreach ($cordenadas->cordenadas as $cordenada){
+            $latitud+=$cordenada[0];
+            $longitud+=$cordenada[1];
+        }
+        $latitud=$latitud/count($cordenadas->cordenadas);
+        $longitud=$longitud/count($cordenadas->cordenadas);
+        return '['.$latitud.','.$longitud.']';
     }
 
     /**

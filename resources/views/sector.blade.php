@@ -11,6 +11,10 @@
                 {!!$errors->first('nombre','<div class="invalid-feedback d-block">:message</div>')!!}
             </div>
             <div class="col-md-4">
+                <label for="inputEmail4" class="form-label">Cordenadas(*)</label>
+                <input type="text" class="form-control" name="cordenadas" value="{{old('cordenadas')}}">
+                {!!$errors->first('cordenadas','<div class="invalid-feedback d-block">:message</div>')!!}
+            </div><div class="col-md-4">
                 <label for="inputEmail4" class="form-label">Descripcion(*)</label>
                 <input type="text" class="form-control" name="descripcion" value="{{old('descripcion')}}">
                 {!!$errors->first('descripcion','<div class="invalid-feedback d-block">:message</div>')!!}
@@ -26,7 +30,8 @@
                 <thead>
                 <tr class="text-secondary">
                     <th style="width:5%;">ID</th>
-                    <th class="d-none d-sm-table-cell" style="width: 10%;">Sector</th>
+                    <th class="d-none d-sm-table-cell" style="width: 20%;">Sector</th>
+                    <th class="d-none d-sm-table-cell" style="width: 30%;">Cordenadas</th>
                     <th class="d-none d-sm-table-cell" style="width: 30%;">Descripción</th>
                     <th class="d-none d-sm-table-cell" style="width: 5%;">Estado</th>
                     <th class="text-center" style="width: 5%;">Acciones</th>
@@ -37,6 +42,7 @@
                     <tr>
                         <td>{{$sector->id}}</td>
                         <td>{{$sector->nombre}}</td>
+                        <td>{{$sector->cordenadas}}</td>
                         <td>{{$sector->descripcion}}</td>
                         <td>{{$sector->estado}}</td>
                         <td class="text-center fs-5">
@@ -81,6 +87,11 @@
                                            value="{{$sector_edit->nombre}}">
                                     {!!$errors->first('nombre','<div class="invalid-feedback d-block">:message</div>')!!}
                                 </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Cordenadas</label>
+                                <textarea class="form-control"
+                                          name="cordenadas">{{$sector_edit->cordenadas}}</textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="message-text" class="col-form-label">Descripción</label>

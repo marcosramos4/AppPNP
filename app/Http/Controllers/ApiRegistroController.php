@@ -22,7 +22,7 @@ class ApiRegistroController extends Controller
     public function index()
     {
         try {
-            $registros = Registro::all();
+            $registros = Registro::with('Personal','Sector')->get();
             return $this->responseSuccess($registros, 'suces');
         } catch (Exception $e) {
             return $this->responseError(null, 'error');
@@ -52,11 +52,14 @@ class ApiRegistroController extends Controller
                 'latitud' => 'required|numeric',
                 'longitud' => 'required|numeric',
                 'detalle' => '',
-                'personal_id' => 'required|integer']);
+                'personal_id' => 'required|integer',
+                'sector_id' => '']);
             if ($validator->fails()) {
                 return $this->responseError(null, 'falla');
             }
-            $registro = Registro::create($validator->validated());
+            $registrocreate=$validator->validated();
+            $registrocreate['sector_id']=1;
+            $registro = Registro::create($registrocreate);
             return $this->responseSuccess($registro, 'suces');
         } catch (Exception $e) {
             return $this->responseError(null, 'error');
@@ -72,7 +75,7 @@ class ApiRegistroController extends Controller
     public function show($id)
     {
         try {
-            $registro = Registro::findOrFail($id);
+            $registro = Registro::with('Personal','Sector')->get()->where('sector_id', $id);
             return $this->responseSuccess($registro, 'suces');
         } catch (Exception $e) {
             return $this->responseError(null, 'error');

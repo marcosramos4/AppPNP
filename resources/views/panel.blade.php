@@ -16,45 +16,19 @@
     <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
+        .nav-pills svg{
+            width: 24px;
+            height: 24px;
+
         }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .b-example-divider {
-            height: 3rem;
-            background-color: rgba(0, 0, 0, .1);
-            border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-        }
-
-        .b-example-vr {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 100vh;
-        }
 
         .bi {
             vertical-align: -.125em;
             fill: currentColor;
         }
 
-        .nav-scroller {
-            position: relative;
-            z-index: 2;
-            height: 2.75rem;
-            overflow-y: hidden;
-        }
+
 
         .nav-scroller .nav {
             display: flex;
@@ -71,7 +45,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{asset('/css/dashboard.css')}}" rel="stylesheet">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sidebars/">
+
     <link href="{{asset('/css/sidebars.css')}}" rel="stylesheet">
 </head>
 <body>
@@ -153,6 +127,14 @@
     <symbol id="person-list" viewBox="0 0 16 16">
             <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
     </symbol>
+    <symbol id="punto-registro" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
+    </symbol>
+    <symbol id="punto" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"/>
+            <path d="M9 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+    </symbol>
 
 
 </svg>
@@ -167,7 +149,7 @@
             </button>
 
         </header>
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" style="z-index: 1005">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -187,7 +169,7 @@
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="/" class="text-white nav-link {{active('/')}}" aria-current="page">
-                            <svg class="bi pe-none me-2" width="16" height="16">
+                            <svg class="bi pe-none me-2" >
                                 <use xlink:href="#home"/>
                             </svg>
                             Home
@@ -195,37 +177,37 @@
                     </li>
                     <li>
                         <a href="/dashboard" class="text-white nav-link {{active('dashboard')}} {{active('dashboard/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                            <svg class="bi pe-none me-2" ><use xlink:href="#speedometer2"/></svg>
                             Dashboard
                         </a>
                     </li>
                     <li>
                         <a href="{{route('alertas.index')}}" class="text-white nav-link {{active('alertas')}} {{active('alertas/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                            <svg class="bi pe-none me-2" ><use xlink:href="#punto"/></svg>
                             Alertas
                         </a>
                     </li>
                     <li>
                         <a href="{{route('vigilancia.index')}}" class="text-white nav-link {{active('vigilancia')}} {{active('vigilancia/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                            <svg class="bi pe-none me-2" ><use xlink:href="#punto-registro"/></svg>
                             Vigilancia
                         </a>
                     </li>
                     <li>
                         <a href="{{route('patrullero.index')}}" class="text-white nav-link {{active('patrullero')}} {{active('patrullero/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#car"/></svg>
+                            <svg class="bi pe-none me-2" ><use xlink:href="#car"/></svg>
                             Patrullero
                         </a>
                     </li>  <li>
                         <a href="{{route('subsector.index')}}" class="text-white nav-link {{active('subsector')}} {{active('subsector/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#sector"/></svg>
+                            <svg class="bi pe-none me-2"><use xlink:href="#sector"/></svg>
                             Sector
                         </a>
                     </li>
                     <li>
                         <a href="{{route('personal.index')}}"
                            class="text-white nav-link {{active('personal')}} {{active('personal/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16">
+                            <svg class="bi pe-none me-2" >
                                 <use xlink:href="#people"/>
                             </svg>
                             Personal
@@ -234,7 +216,7 @@
                     <li>
                         <a href="{{route('asignacion.index')}}"
                            class="text-white nav-link {{active('asignacion')}} {{active('aasignacion/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16">
+                            <svg class="bi pe-none me-2" >
                                 <use xlink:href="#person-list"/>
                             </svg>
                             Asignación
@@ -243,7 +225,7 @@
                     <li>
                         <a href="{{route('incidente.index')}}"
                            class="text-white nav-link {{active('incidente')}} {{active('incidente/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16">
+                            <svg class="bi pe-none me-2" >
                                 <use xlink:href="#alerta"/>
                             </svg>
                             Incidentes
@@ -251,7 +233,7 @@
                     </li>
                     <li>
                         <a href="{{route('registro.index')}}" class="text-white nav-link {{active('registro')}} {{active('registro/*')}} ">
-                            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#register"/></svg>
+                            <svg class="bi pe-none me-2" ><use xlink:href="#register"/></svg>
                             Registro
                         </a>
                     </li>
@@ -262,7 +244,7 @@
 
         </nav>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main class="col-md-9 ms-sm-auto col-lg-10">
             @yield('contenido')
         </main>
     </div>

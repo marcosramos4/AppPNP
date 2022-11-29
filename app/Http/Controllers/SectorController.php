@@ -39,6 +39,7 @@ class SectorController extends Controller
     {
         $validatedData = $request->validate([
             'nombre' => 'required|min:3',
+            'cordenadas' => 'required',
             'descripcion' => ''
         ]);
         try {
@@ -84,6 +85,7 @@ class SectorController extends Controller
     {
         $validatedData = $request->validate([
             'nombre' => 'required|min:1',
+            'cordenadas' => 'required',
             'descripcion' => '',
         ]);
         try {

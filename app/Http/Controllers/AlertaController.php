@@ -16,7 +16,8 @@ class AlertaController extends Controller
     {
         $sectores=Sector::all();
         $sector_show=null;
-        return view('alertas',compact('sectores','sector_show'));
+        $ubicaciion='[-16.398882, -71.536961]';
+        return view('alertas',compact('sectores','sector_show','ubicaciion'));
     }
 
     /**
@@ -50,7 +51,8 @@ class AlertaController extends Controller
     {
         $sectores=Sector::all();
         $sector_show=Sector::findOrFail($id);
-        return view('alertas',compact('sectores','sector_show'));
+        $ubicaciion=$this->Ubicacion($sector_show->cordenadas);
+        return view('alertas',compact('sectores','sector_show','ubicaciion'));
     }
 
     /**
@@ -59,6 +61,19 @@ class AlertaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    private function Ubicacion($cordenadas){
+        $cordenadas=json_decode('{"cordenadas":['.$cordenadas.']}');
+        $latitud=0;
+        $longitud=0;
+
+        foreach ($cordenadas->cordenadas as $cordenada){
+            $latitud+=$cordenada[0];
+            $longitud+=$cordenada[1];
+        }
+        $latitud=$latitud/count($cordenadas->cordenadas);
+        $longitud=$longitud/count($cordenadas->cordenadas);
+       return '['.$latitud.','.$longitud.']';
+    }
     public function edit($id)
     {
         //

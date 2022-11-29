@@ -18,5 +18,8 @@ class Personal extends Model
     public function User(){
         return $this->hasOne(User::class);
     }
+    public function Registro() {
+        return $this->hasMany('registro');
+    }
 
 }
