@@ -25,7 +25,7 @@ Route::get('/mapa', function () {
 });
 //pagina
 
-Route::resource('', 'PaginaController');
+Route::resource('dashboard', 'PaginaController');
 Route::resource('alertas', 'AlertaController');
 Route::resource('vigilancia', 'VigilanciaController');
 
