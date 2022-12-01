@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Incidente;
 use App\Models\Registro;
 use Carbon\Carbon;
+use DB;
 
 
 class PaginaController extends Controller
@@ -21,10 +22,17 @@ class PaginaController extends Controller
      */
     public function index()
     {
+        $countIncidentsMonth = Incidente::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
+        ->whereYear('created_at', date('Y'))
+        ->groupBy(DB::raw("Month(created_at)"))
+        ->pluck('count', 'month_name');
+
+                $labels = $countIncidentsMonth->keys();
+                $data = $countIncidentsMonth->values();
         $todayIncidentAmount = Incidente::whereDate('created_at', Carbon::today())->count();
         $incidentAmount = Incidente::count();
         $registroAmount = Registro::count();
-        return view('dashboard', compact ('todayIncidentAmount','incidentAmount', 'registroAmount'));
+        return view('dashboard', compact ('todayIncidentAmount','incidentAmount', 'registroAmount','labels', 'data'));
     }
 
     /**
