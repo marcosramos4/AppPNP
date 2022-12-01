@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Incidente;
 
 class PaginaController extends Controller
 {
@@ -17,7 +18,8 @@ class PaginaController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $incidentAmount = Incidente::count();
+        return view('dashboard', compact ('incidentAmount'));
     }
 
     /**
