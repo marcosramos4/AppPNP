@@ -22,6 +22,11 @@ class PaginaController extends Controller
      */
     public function index()
     {
+        $countIncidenteRobo = Incidente::where('tipo_id','=',1)->count();
+        $countIncidenteIncendio = Incidente::where('tipo_id','=',2)->count();
+        $countIncidenteAlerta = Incidente::where('tipo_id','=',3)->count();
+        //$countIncidenteRobo = count($incidenteRobo);
+
         $countIncidentsMonth = Incidente::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
         ->whereYear('created_at', date('Y'))
         ->groupBy(DB::raw("Month(created_at)"))
@@ -32,7 +37,7 @@ class PaginaController extends Controller
         $todayIncidentAmount = Incidente::whereDate('created_at', Carbon::today())->count();
         $incidentAmount = Incidente::count();
         $registroAmount = Registro::count();
-        return view('dashboard', compact ('todayIncidentAmount','incidentAmount', 'registroAmount','labels', 'data'));
+        return view('dashboard', compact ('todayIncidentAmount','incidentAmount', 'registroAmount','labels', 'data', 'countIncidenteRobo','countIncidenteIncendio','countIncidenteAlerta'));
     }
 
     /**
