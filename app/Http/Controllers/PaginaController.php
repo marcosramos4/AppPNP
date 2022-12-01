@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Incidente;
+use App\Models\Registro;
+use Carbon\Carbon;
+
 
 class PaginaController extends Controller
 {
@@ -18,8 +21,10 @@ class PaginaController extends Controller
      */
     public function index()
     {
+        $todayIncidentAmount = Incidente::whereDate('created_at', Carbon::today())->count();
         $incidentAmount = Incidente::count();
-        return view('dashboard', compact ('incidentAmount'));
+        $registroAmount = Registro::count();
+        return view('dashboard', compact ('todayIncidentAmount','incidentAmount', 'registroAmount'));
     }
 
     /**

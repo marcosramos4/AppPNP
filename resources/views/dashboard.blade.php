@@ -29,9 +29,10 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Incidentes Totales</div>
-                                    @if(isset($incidentAmount))
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$incidentAmount}}</div>
+                                    Incidentes de Hoy
+                                </div>
+                                    @if(isset($todayIncidentAmount))
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$todayIncidentAmount}}</div>
                                 @endif
                             </div>
                             <div class="col-auto">
@@ -49,8 +50,10 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Incidentes Atendidos</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">500</div>
+                                    Incidentes Totales</div>
+                                    @if(isset($incidentAmount))
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$incidentAmount}}</div>
+                                @endif
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-bullhorn fa-2x text-gray-300"></i>
@@ -68,8 +71,10 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Incidentes Pendientes</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">50</div>
+                                    Registros Totales</div>
+                                    @if(isset($registroAmount))
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$registroAmount}}</div>
+                                @endif
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
