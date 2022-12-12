@@ -61,7 +61,7 @@ class ApiIncidenteController extends Controller
             }
             $incidentenuevo = $validator->validated();
             $incidentenuevo['fotos'] = $filename;
-            $incidentenuevo['sector_id'] =1;
+            $incidentenuevo['sector_id'] = $this->obtenerSector($incidentenuevo['latitud'],$incidentenuevo['longitud']);
             $incidente = Incidente::create($incidentenuevo);
             return $this->responseSuccess($incidente, 'suces');
         } catch (\Exception $e) {
@@ -74,15 +74,13 @@ class ApiIncidenteController extends Controller
     private function obtenerSector($latitud, $longitud)
     {
 
-        $sectorId = 0;
+        $sectorId = 1;
         $sectores = Sector::all();
         foreach ($sectores as $sector) {
-            $tempUbicacion = $this->Ubicacion($sector->cordenadas,$latitud,$longitud);
-            $poligono= json_decode('{"cordenadas":[' . $sector->cordenadas . ']}');
-           foreach ($poligono->cordenadas as $cordenada){
-               if($cordenada[0]==$tempUbicacion[0]&&$cordenada[0]==$tempUbicacion[0]){
-                   $sectorId=$sector->id;
-               }
+            $poligono = json_decode('{"cordenadas":[' . $sector->cordenadas . ']}');
+           $si=$this->inArea($latitud,$longitud,$poligono->cordenadas);
+           if($si){
+               return $sector->id;
            }
 
         }
@@ -90,25 +88,43 @@ class ApiIncidenteController extends Controller
 
     }
 
-    private function Ubicacion($cordenadas,$latitud,$longitud)
+
+    private function inArea($x, $y, $arr)
     {
-      $poligono= json_decode('{"cordenadas":[' . $cordenadas . ']}');
-        $latitudMin = abs($latitud);
-        $longitudMin =abs($longitud);
-        $cordenadasmascorta=null;
-      foreach ($poligono->cordenadas as $cordenada){
-          $latitudDiferencia=abs($cordenada[0])-abs($latitud);
-          $longitudDiferencia=abs($cordenada[1])-abs($longitud);
-          if ($latitudDiferencia > $latitudMin || $longitudDiferencia> $longitudMin) {
-              $latitudMin=$latitudDiferencia;
-              $longitudMin=$longitudDiferencia;
-              $cordenadasmascorta=$cordenada;
-          }
+        // Número de puntos
+        $count = count($arr);
+        $n = 0; // El número de puntos cruzados por la línea
+        $bool = 0; // fuera
+        for ($i = 0, $j = $count - 1; $i < $count; $j = $i, $i++) {
+            $px1 = $arr[$i][0];
+            $py1 = $arr[$i][1];
+            $px2 = $arr[$j][0];
+            $py2 = $arr[$j][1];
 
-      }
-      return$cordenadasmascorta;
+            if ($x >= $px1 || $x >= $px2) {
+                if (($y >= $py1 && $y <= $py2) || ($y >= $py2 && $y <= $py1)) {
+                    if (($y == $py1 && $x == $px1) || ($y == $py2 && $x == $px2)) {
+                        $bool = 2; // En el punto
+                        return $bool;
+                    } else {
+                        $px = $px1 + ($y - $py1) / ($py2 - $py1) * ($px2 - $px1);
+                        if ($px == $x) {
+                            $bool = 3; // En línea
+                        } elseif ($px < $x) {
+                            $n++;
+                        }
 
+                    }
+                }
+            }
+
+        }
+        if ($n % 2 != 0) {
+            $bool = 1;
+        }
+        return $bool;
     }
+
 
     /**
      * Display the specified resource.
@@ -118,8 +134,8 @@ class ApiIncidenteController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $incidente = Incidente::with('Sector', 'Tipo')->get()->where('sector_id', $id);
-        return $this->responseSuccess($incidente, 'incidente !');
+        $incidentes = Incidente::with('Sector', 'Tipo')->get()->where('sector_id', $id);
+        return $this->responseSuccess($incidentes, 'incidente !');
     }
 
     /**

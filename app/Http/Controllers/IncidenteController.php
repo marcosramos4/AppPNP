@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class IncidenteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth',['except' => ['login']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,13 +31,13 @@ class IncidenteController extends Controller
      */
     public function home(){
 
-        $locations = [];     
+        $locations = [];
 
         foreach (incidente::All() as $incidentes) {
 
             $locations[] = [
-                     //'location' => view('map-tool-tip')->with(['address' => $address])->render(), 
-                     'latitude' => $incidentes->lat, 
+                     //'location' => view('map-tool-tip')->with(['address' => $address])->render(),
+                     'latitude' => $incidentes->lat,
                      'longitude' => $incidentes->lng
             ];
         }
@@ -83,7 +87,7 @@ class IncidenteController extends Controller
     {
         $incidentes = Incidente::all();
         $incidente_show = Patrullero::findOrFail($id);
-        return view('patrullero', compact( 'incidentes','incidente_show'));
+        return view('incidente', compact( 'incidentes','incidente_show'));
     }
 
     /**

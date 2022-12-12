@@ -13,7 +13,7 @@ class PaginaController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth',['except' => ['login']]);
+        $this->middleware('auth',['except' => ['login']]);
     }
     /**
      * Display a listing of the resource.

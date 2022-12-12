@@ -22,8 +22,7 @@ class RolController extends Controller
 
     public function __construct()
     {
-       // $this->middleware('permisos',['uno']);
-
+        $this->middleware('auth',['except' => ['login']]);
     }
 
     /**
