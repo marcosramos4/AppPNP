@@ -27,22 +27,25 @@
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="row g-4" method="POST" action="{{route('personal.store')}}">
+                            <form class="row g-4" method="POST" action="{{route('asignacion.store')}}">
                                 @csrf
                                 <div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="inputEmail4" class="form-label ">Patrullero</label>
-                                            <input type="text" class="form-control"
-                                                   name="placa" {{old('placa')}}>
-                                            {!!$errors->first('placa','<div class="invalid-feedback d-block">:message</div>')!!}
-
+                                            <label for="inputEmail4" class="form-label">Patrullero</label>
+                                            <select class="form-select" name="patrullero_id">
+                                                <option value="0">Sin Patrullero</option>
+                                                @foreach($patrulleros as $patrullero)
+                                                    <option value="{{$patrullero->id}}">{{$patrullero->Placa}}</option>
+                                                @endforeach
+                                            </select>
+                                            {!!$errors->first('patrullero_id','<div class="invalid-feedback d-block">:message</div>')!!}
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="inputEmail4" class="form-label">Sub Sector</label>
-                                            <select class="form-select" name="rol_id">
-                                                @foreach($subsectores as $subsector)
-                                                    <option value="{{$subsector->id}}">{{$subsector->lugar}}</option>
+                                            <label for="inputEmail4" class="form-label">Sector</label>
+                                            <select class="form-select" name="sector_id">
+                                                @foreach($sectores as $sector)
+                                                    <option value="{{$sector->id}}">{{$sector->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             {!!$errors->first('rol_id','<div class="invalid-feedback d-block">:message</div>')!!}
@@ -50,15 +53,17 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label for="inputEmail4" class="form-label ">Personal(*)</label>
-                                            <input type="text" class="form-control"
-                                                   name="personal" {{old('personal')}}>
-                                            {!!$errors->first('personal','<div class="invalid-feedback d-block">:message</div>')!!}
+                                            <ul class="list-group" id="listapersonal">
+
+
+                                            </ul>
                                         </div>
+
                                         <div class="col-md-12">
                                             <label for="inputEmail4" class="form-label ">Detalle(*)</label>
-                                            <input type="text" class="form-control"
-                                                   name="detalle" {{old('detalle')}}>
-                                            {!!$errors->first('detalle','<div class="invalid-feedback d-block">:message</div>')!!}
+                                            <textarea type="text" class="form-control"
+                                                   name="detalle" {{old('detalle')}}></textarea>
+                                                {!!$errors->first('detalle','<div class="invalid-feedback d-block">:message</div>')!!}
                                         </div>
 
                                     </div>
@@ -70,6 +75,54 @@
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </form>
+
+                            <div class="position-relative w-100">
+                                <form class=" p-2" method="POST" id="personalBuscar" action="personal/buscar">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input type="search" class="form-control rounded" placeholder="Buscar"
+                                               name="placa" onkeypress="personalbuscarasig(this)"/>
+                                    </div>
+                                    <div class="list-group position-absolute " id="listadni">
+                                    </div>
+                                </form>
+
+                            </div>
+
+                            <script>
+                                function personalbuscarasig(e) {
+                                    console.log(e.value);
+                                    const xmr = new XMLHttpRequest();
+                                    const formData = new FormData(document.getElementById('personalBuscar'));
+                                    const listadni = document.getElementById('listadni')
+                                    listadni.innerHTML='';
+                                    xmr.open("POST", 'personal/buscar', true);
+                                    xmr.send(formData);
+                                    xmr.onreadystatechange = function () {
+                                        if (this.readyState === 4 && this.status === 200) {
+                                            const personal = JSON.parse(this.responseText);
+                                            let alist = '';
+                                            personal.forEach(perso => alist +=
+                                                '<label class="list-group-item list-group-item-action" onclick="agregarpersonal(this)" title="'+perso.id+'">' + perso.DNI + ' ' + perso.nombres + ' ' + perso.apellidos + '</label>');
+                                            listadni.innerHTML = alist;
+                                        }
+                                    };
+                                }
+
+
+                                function agregarpersonal(perso){
+                                    var item='<li class="list-group-item d-flex justify-content-between align-items-center"><input type="hidden" name="personal[]" value="'+perso.title+'">'+perso.innerHTML+' <span class="btn-close btn" onclick="quitar(this)"></span></li>'
+                                    var listapersonal=document.getElementById('listapersonal');
+                                    listapersonal.innerHTML=listapersonal.innerHTML+item;
+                                }
+                                function quitar(e){
+                                    var ele=e.target;
+                                    console.log(ele);
+
+                                }
+                            </script>
+
+
                         </div>
 
                     </div>
@@ -89,43 +142,14 @@
 
                 </script>
             @endif
-
-            <form class="col-md-4 p-2" method="POST" id="personalBuscar" action="personal/buscar">
-                @csrf
-                <div class="input-group">
-                    <input type="search" class="form-control rounded" placeholder="Buscar"
-                           name="placa" onkeypress="personalbuscar(this)"/>
-                </div>
-                <div class="list-group position-absolute " id="listadni">
-                </div>
-            </form>
-            <script>
-                function personalbuscar(e) {
-                    console.log(e.value);
-                    const xmr = new XMLHttpRequest();
-                    const formData = new FormData(document.getElementById('personalBuscar'));
-                    const listadni = document.getElementById('listadni')
-                    xmr.open("POST", 'personal/buscar', true);
-                    xmr.send(formData);
-                    xmr.onreadystatechange = function () {
-                        if (this.readyState === 4 && this.status === 200) {
-                            const personal = JSON.parse(this.responseText);
-                            let alist = '';
-                            personal.forEach(perso => alist +=
-                                '<a href="/personal/' + perso.id + '" class="list-group-item list-group-item-action">' + perso.DNI + ' ' + perso.nombres + ' ' + perso.apellidos + '</a>');
-                            listadni.innerHTML = alist;
-                        }
-                    };
-                }
-            </script>
             <div class="box-typical box-typical-padding">
                 <table id="ticket_data" class="table table-bordered table-striped table-vcenter js-dataTable-full">
 
                     <thead>
                     <tr class="text-secondary">
                         <th style="width: 5%;">N°</th>
+                        <th style="width: 5%;">Asignación</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Sector</th>
-                        <th class="d-none d-sm-table-cell" style="width: 10%;">Sub Sector</th>
                         <th class="d-none d-sm-table-cell" style="width: 20%;">Patrullero</th>
                         <th class="d-none d-sm-table-cell" style="width: 20%;">Agentes</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Detalle</th>
@@ -135,20 +159,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @isset($personales)
-                    @foreach($personales as $personal)
+                    @isset($asignaciones)
+                    @foreach($asignaciones as $asignacion)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td><a href="{{route('personal.show',$personal->id)}}">{{$personal->DNI}}</a></td>
-                            <td>{{$personal->nombres}}</td>
-                            <td>{{$personal->apellidos}}</td>
-                            <td>{{$personal->correo}}</td>
-                            <td>{{$personal->Rol->descripcion}}</td>
+                            <td><a href="{{route('asignacion.show',$asignacion->id)}}">{{$asignacion->id}}</a></td>
+                            <td>{{$asignacion->Sector->nombre}}</td>
+                            <td>{{$asignacion->patrullero==null?'sin Patrullero':$asignacion->patrullero->placa}}</td>
+                            <td><?php $personal=json_decode($asignacion->personal);
+                                echo count($personal);
+                                    ?></td>
+                            <td>{{$asignacion->detalle}}</td>
+                            <td>{{$asignacion->created_at}}</td>
                             <td class="text-center fs-5">
-                                <a href="{{route('personal.edit',$personal->id)}}"
-                                   class="button text-secondary">🖉
-                                </a>
-                                <form action="{{route('personal.destroy',$personal->id)}}" method="POST"
+                                <form action="{{route('asignacion.destroy',$asignacion->id)}}" method="POST"
                                       class="d-inline ">
                                     @csrf
                                     {!! method_field('DELETE') !!}
@@ -236,7 +260,7 @@
             </div>
 
         @endisset
-        @isset($personal_show)
+        @isset($asignacion_show)
             <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                  aria-hidden="true"
                  data-bs-backdrop="static" data-bs-keyboard="false">
@@ -244,27 +268,25 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Detalle Personal</h1>
-                            <a href="{{route('personal.index')}}" type="button" class="btn-close"
+                            <a href="{{route('asignacion.index')}}" type="button" class="btn-close"
                                aria-label="Close"></a>
                         </div>
                         <div class="modal-body fs-6">
-                            <p><b> DNI:</b> {{$personal_show->DNI}} </p>
-                            <p><b>Nombres: </b>{{$personal_show->nombres}}</p>
-                            <p><b>Apellidos: </b>{{$personal_show->apellidos}}</p>
-                            <p><b>Correo: </b>{{$personal_show->correo}}</p>
-                            <p><b>Usuario: </b>{{$personal_show->usuario}}</p>
-                            <p><b>Rol: </b>{{$personal_show->Rol->nombre}}</p>
+                            <p><b> Sector:</b> {{$asignacion_show->Sector->nombre}} </p>
+                            <p><b>Patrullero: </b>{{$asignacion_show->patrullero==null?'sin Patrullero':$asignacion_show->patrullero->placa}}</p>
+                            <p><b>Detalle: </b>{{$asignacion_show->detalle}}</p>
+                            <h4>Personal</h4>
+                            @foreach($personalAsignado as $personal)
+                                <p><b>Datos:</b>DNI: {{$personal->DNI}}, Nombres:{{$personal->nombres}} Apellidos:{{$personal->apellidos}} </p>
+                            @endforeach
                         </div>
                         <div class="modal-footer">
-                            <p>Creado: {{$personal_show->created_at}} /
-                                Actualizado: {{$personal_show->updated_at}}</p>
+                            <p>Creado: {{$asignacion_show->created_at}} /
+                                Actualizado: {{$asignacion_show->updated_at}}</p>
                         </div>
                         <div>
                             <div class="modal-footer fs-5 ">
-                                <a href="{{route('personal.edit',$personal_show->id)}}"
-                                   class=" link-primary">Editar
-                                </a>
-                                <form action="{{route('personal.destroy',$personal_show->id)}}" method="POST"
+                                <form action="{{route('asignacion.destroy',$asignacion_show->id)}}" method="POST"
                                       class="d-inline ">
                                     @csrf
                                     {!! method_field('DELETE') !!}

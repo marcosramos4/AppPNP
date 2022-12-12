@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asignacion;
+use App\Models\Patrullero;
+use App\Models\Personal;
+use App\Models\Sector;
 use App\Models\SubSector;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AsignacionController extends Controller
@@ -14,8 +19,10 @@ class AsignacionController extends Controller
      */
     public function index()
     {
-        $subsectores=SubSector::all();
-        return view('asignacion',compact('subsectores'));
+        $sectores=Sector::all();
+        $patrulleros=Patrullero::all();
+        $asignaciones=Asignacion::all();
+        return view('asignacion',compact('sectores','patrulleros','asignaciones'));
     }
 
     /**
@@ -36,7 +43,20 @@ class AsignacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'patrullero_id' => 'required',
+            'sector_id' => 'required',
+            'personal' => 'required',
+            'descripcion' => '',
+        ]);
+        $validatedData['personal']=json_encode($validatedData['personal']);
+        try {
+            Asignacion::create($validatedData);
+            return back()->with(['mensaje' => 'Asignación fué registrado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
+        } catch (QueryException $e) {
+            return back()->with(['mensaje' => 'Asignación no fué registrado ', 'tipo' => ' alert-danger', 'titulo' => 'Error']);
+        }
+
     }
 
     /**
@@ -47,7 +67,13 @@ class AsignacionController extends Controller
      */
     public function show($id)
     {
-        //
+        $sectores=Sector::all();
+        $patrulleros=Patrullero::all();
+        $asignaciones=Asignacion::all();
+        $asignacion_show=Asignacion::findOrFail($id);
+        $listaperso=json_decode($asignacion_show->personal);
+        $personalAsignado=Personal::WhereIn('id', $listaperso)->get();
+        return view('asignacion',compact('sectores','patrulleros','asignaciones','asignacion_show','personalAsignado'));
     }
 
     /**
@@ -81,6 +107,11 @@ class AsignacionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Asignacion::destroy($id);
+            return redirect('/asignacion')->with(['mensaje' => 'Asignación fué Eliminado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
+        } catch (QueryException $e) {
+            return redirect('/asignacion')->with(['mensaje' => 'Asignación no fué Eliminado', 'tipo' => 'alert-warning', 'titulo' => 'Error']);
+        }
     }
 }

@@ -130,7 +130,9 @@ class RolController extends Controller
         ]);
         $validatedData['permisos'] = self::permisos($validatedData['permisos']);
         try {
-            Rol::whereId($id)->update($validatedData);
+            if($id>1) {
+                Rol::whereId($id)->update($validatedData);
+            }
             return redirect('/personal/rol')->with(['mensaje' => 'Rol fué Actualizado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
             return redirect('/personal/rol')->with(['mensaje' => 'Rol no fué Actualizado', 'tipo' => 'alert-danger', 'titulo' => 'Error']);
@@ -146,7 +148,9 @@ class RolController extends Controller
     public function destroy($id)
     {
         try {
-            Rol::destroy($id);
+            if($id>1) {
+                Rol::destroy($id);
+            }
             return redirect('/personal/rol')->with(['mensaje' => 'Rol fué Eliminado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
             return redirect('/personal/rol')->with(['mensaje' => 'Rol no fué Eliminado', 'tipo' => 'alert-warning', 'titulo' => 'Error']);

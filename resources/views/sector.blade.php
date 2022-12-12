@@ -62,8 +62,8 @@
 
                             </script>
                         @endif
-                        <button onclick="dibujar()">crear</button>
-                        <button onclick="quitar()">quitar</button>
+                        <button onclick="dibujar()" class="btn btn-warning ">Trazar Mapa</button>
+
                         <div id="map" style="height: 500px; width: 100%"></div>
                         <script>
                             var map = L.map('map').setView([-16.39953, -71.535823], 13);

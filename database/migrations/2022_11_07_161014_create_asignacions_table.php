@@ -18,6 +18,7 @@ class CreateAsignacionsTable extends Migration
             $table->timestamps();
             $table->integer("patrullero_id")->index();
             $table->integer("sector_id")->index();
+            $table->text("personal");
             $table->text('detalle')->nullable();
             $table->integer("estado")->default(1);
         });

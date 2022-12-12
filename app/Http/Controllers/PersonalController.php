@@ -117,7 +117,9 @@ class PersonalController extends Controller
         $usuario = substr($request->input('nombres'),0, 3) . substr($request->input('apellidos'),0,3).substr($request->input('DNI'),3,3);
         $updatepero=array_merge($validatedData, ['usuario' => $usuario, 'password' => $request->input('DNI')]);
         try {
-            Personal::whereId($id)->update($updatepero);
+            if($id>1) {
+                Personal::whereId($id)->update($updatepero);
+            }
             return redirect('personal')->with(['mensaje' => 'Personal fué Actualizado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
             return redirect('personal')->with(['mensaje' => 'Personal no fué Actualizado', 'tipo' => 'alert-danger', 'titulo' => 'Error']);
@@ -133,7 +135,9 @@ class PersonalController extends Controller
     public function destroy($id)
     {
         try {
-            Personal::destroy($id);
+           if($id>1){
+               Personal::destroy($id);
+           }
             return redirect('/personal')->with(['mensaje' => 'Personal fué Eliminado', 'tipo' => 'alert-success', 'titulo' => 'Realizado']);
         } catch (QueryException $e) {
             return redirect('/personal')->with(['mensaje' => 'Personal no fué Eliminado', 'tipo' => 'alert-warning', 'titulo' => 'Error']);

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Asignacion extends Model
 {
     use HasFactory;
-    protected $fillable=['patrullero_id','sector_id','estado'];
+    protected $fillable=['patrullero_id','sector_id','personal','estado'];
     function Patrullero(){
         return $this->belongsTo(Patrullero::class);
     }
