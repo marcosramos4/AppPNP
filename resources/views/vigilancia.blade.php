@@ -43,6 +43,7 @@
                     alertas.data.forEach(function (e){
                         L.marker([e.latitud, e.longitud], {
                         }).addTo(map).bindPopup("<b>Fecha:"+new Date(e.updated_at).toLocaleString()+"<br><b>Nombres: </b> "+e.personal.nombres+"<br><b>Apellidos: </b> "+e.personal.apellidos+"<br><b>Detalle: </b>"+e.detalle+"<br>");
+
                     });
                 }
             };

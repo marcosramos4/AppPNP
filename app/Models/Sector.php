@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Sector extends Model
 {
     use HasFactory;
-    protected $fillable=['nombre','cordenadas','descripcion','estado'];
+    protected $fillable=['nombre','cordenadas','descripcion','color','estado'];
     public function Incidente() {
         return $this->hasMany('Incidente');
     }public function Registro() {
-        return $this->hasMany('registro');
+        return $this->hasMany('Registro');
     }
     public function SubSector(){
         return $this->hasOne(SubSector::class);

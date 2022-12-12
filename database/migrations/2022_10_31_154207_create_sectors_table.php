@@ -17,6 +17,7 @@ class CreateSectorsTable extends Migration
             $table->id();
             $table->string('nombre')->unique();
             $table->text('cordenadas');
+            $table->string('color');
             $table->string('descripcion')->nullable();
             $table->integer('estado')->default(1);
             $table->timestamps();

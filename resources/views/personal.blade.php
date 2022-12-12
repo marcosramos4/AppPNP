@@ -156,7 +156,7 @@
                                 <td><a href="{{route('personal.show',$personal->id)}}">{{$personal->DNI}}</a></td>
                                 <td>{{$personal->nombres}}</td>
                                 <td>{{$personal->apellidos}}</td>
-                                <td>{{$personal->email}}</td>
+                                <td>{{$personal->user->email}}</td>
                                 <td>{{$personal->Rol->descripcion}}</td>
                                 <td class="text-center fs-5">
                                     <a href="{{route('personal.edit',$personal->id)}}"
@@ -262,7 +262,7 @@
                                 <p><b> DNI:</b> {{$personal_show->DNI}} </p>
                                 <p><b>Nombres: </b>{{$personal_show->nombres}}</p>
                                 <p><b>Apellidos: </b>{{$personal_show->apellidos}}</p>
-                                <p><b>Email: </b>{{$personal_show->Email}}</p>
+                                <p><b>Email: </b>{{$personal_show->email}}</p>
                                 <p><b>Usuario: </b>{{$personal_show->usuario}}</p>
                                 <p><b>Rol: </b>{{$personal_show->Rol->nombre}}</p>
                             </div>

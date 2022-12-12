@@ -36,7 +36,8 @@
             <tr class="text-secondary">
                 <th style="width: 5%;">N°</th>
                 <th class="d-none d-sm-table-cell" style="width: 5%;">ID</th>
-                <th class="d-none d-sm-table-cell" style="width: 10%;">Cordenadas</th>
+                <th class="d-none d-sm-table-cell" style="width: 10%;">Latitud</th>
+                <th class="d-none d-sm-table-cell" style="width: 10%;">Langitud</th>
                 <th class="d-none d-sm-table-cell" style="width: 20%;">detalle</th>
                 <th class="d-none d-sm-table-cell" style="width: 10%;">Nombres</th>
                 <th class="d-none d-sm-table-cell" style="width: 10%;">Apellidos</th>
@@ -50,7 +51,8 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td><a href="{{route('personal.show',$registro->id)}}">{{$registro->id}}</a></td>
-                    <td>{{$registro->cordenadas}}</td>
+                    <td>{{$registro->latitud}}</td>
+                    <td>{{$registro->longitud}}</td>
                     <td>{{$registro->detalle}}</td>
                     <td>{{$registro->Personal->nombres}}</td>
                     <td>{{$registro->Personal->apellidos}}</td>
@@ -62,4 +64,6 @@
             </tbody>
         </table>
     </div>
+
+
 @stop

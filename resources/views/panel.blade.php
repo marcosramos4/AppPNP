@@ -13,6 +13,9 @@
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
             integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
             crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.freedraw/2.0.1/leaflet-freedraw.web.js"
+            integrity="sha512-Jf2UYAJWPxFD1oZ2P8yytQqnyjGuenrMBYy97V6+tea9Mqj1putwS4G79fi3IiPqJql4s1k9KP7OHQHSPwdTCQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <style>
@@ -143,7 +146,7 @@
 <div class="container-fluid">
     <div class="row">
         <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow ">
-            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Company name</a>
+            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Comisaría</a>
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -154,14 +157,17 @@
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong>Integrador2</strong>
+                        <strong>{{auth()->user()->Personal->nombres}}</strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
 
                         <li><a class="dropdown-item" href="#">Configuración</a></li>
                         <li><a class="dropdown-item" href="#">My Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                        <form action="{{route('store')}}" method="POST">
+                            @csrf
+                            <li><button class="dropdown-item" type="submit">Cerrar Sesión</button></li>
+                        </form>
                     </ul>
                 </div>
 

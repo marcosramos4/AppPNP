@@ -48,6 +48,7 @@ class ApiIncidenteController extends Controller
                 'longitud' => 'required|numeric',
                 'detalle' => '',
                 'fotos' => '',
+                'sector_id' => '',
                 'tipo_id' => 'required|integer']);
             if ($validator->fails()) {
                 return $this->responseError(null, 'erros in data');
@@ -60,7 +61,7 @@ class ApiIncidenteController extends Controller
             }
             $incidentenuevo = $validator->validated();
             $incidentenuevo['fotos'] = $filename;
-            $incidentenuevo['sector_id'] = 1;
+            $incidentenuevo['sector_id'] =1;
             $incidente = Incidente::create($incidentenuevo);
             return $this->responseSuccess($incidente, 'suces');
         } catch (\Exception $e) {
@@ -72,27 +73,41 @@ class ApiIncidenteController extends Controller
 
     private function obtenerSector($latitud, $longitud)
     {
+
+        $sectorId = 0;
         $sectores = Sector::all();
         foreach ($sectores as $sector) {
+            $tempUbicacion = $this->Ubicacion($sector->cordenadas,$latitud,$longitud);
+            $poligono= json_decode('{"cordenadas":[' . $sector->cordenadas . ']}');
+           foreach ($poligono->cordenadas as $cordenada){
+               if($cordenada[0]==$tempUbicacion[0]&&$cordenada[0]==$tempUbicacion[0]){
+                   $sectorId=$sector->id;
+               }
+           }
 
         }
-
+        return $sectorId;
 
     }
 
-    private function Ubicacion($cordenadas)
+    private function Ubicacion($cordenadas,$latitud,$longitud)
     {
-        $cordenadas = json_decode('{"cordenadas":[' . $cordenadas . ']}');
-        $latitud = 0;
-        $longitud = 0;
+      $poligono= json_decode('{"cordenadas":[' . $cordenadas . ']}');
+        $latitudMin = abs($latitud);
+        $longitudMin =abs($longitud);
+        $cordenadasmascorta=null;
+      foreach ($poligono->cordenadas as $cordenada){
+          $latitudDiferencia=abs($cordenada[0])-abs($latitud);
+          $longitudDiferencia=abs($cordenada[1])-abs($longitud);
+          if ($latitudDiferencia > $latitudMin || $longitudDiferencia> $longitudMin) {
+              $latitudMin=$latitudDiferencia;
+              $longitudMin=$longitudDiferencia;
+              $cordenadasmascorta=$cordenada;
+          }
 
-        foreach ($cordenadas->cordenadas as $cordenada) {
-            $latitud += $cordenada[0];
-            $longitud += $cordenada[1];
-        }
-        $latitud = $latitud / count($cordenadas->cordenadas);
-        $longitud = $longitud / count($cordenadas->cordenadas);
-        return array($latitud, $longitud);
+      }
+      return$cordenadasmascorta;
+
     }
 
     /**

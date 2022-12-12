@@ -23,6 +23,14 @@ function active($url)
 Route::get('/mapa', function () {
     return view('mapa');
 });
+Route::get('/dimapa', function () {
+    return view('dimapa');
+});
+
+Route::get('/dibujamapa', function () {
+    return view('dibujamapa');
+});
+Route::resource('/', 'homeController');
 //pagina
 
 Route::resource('dashboard', 'PaginaController');

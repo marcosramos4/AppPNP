@@ -51,8 +51,8 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td><a href="{{route('personal.show',$incidente->id)}}">{{$incidente->id}}</a></td>
-                    <td>{{$incidente->lat}}</td>
-                    <td>{{$incidente->lng}}</td>
+                    <td>{{$incidente->latitud}}</td>
+                    <td>{{$incidente->longitud}}</td>
                     <td>{{$incidente->detalle}}</td>
                     <td>{{$incidente->foto}}</td>
                     <td>{{$incidente->Sector->nombre}}</td>
